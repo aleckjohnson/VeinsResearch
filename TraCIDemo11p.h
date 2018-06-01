@@ -21,6 +21,8 @@
 #ifndef TraCIDemo11p_H
 #define TraCIDemo11p_H
 
+#include <string>
+#include <list>
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 
 /**
@@ -40,6 +42,11 @@
 class TraCIDemo11p : public BaseWaveApplLayer {
 	public:
 		virtual void initialize(int stage);
+        virtual void determineVar();
+        virtual void determineNode();
+        virtual void moveToCoord();
+        virtual void confirmArrival();
+        virtual void funcCaller();
 	protected:
 		simtime_t lastDroveAt;
 		bool sentMessage;
@@ -48,6 +55,11 @@ class TraCIDemo11p : public BaseWaveApplLayer {
 		Coord latCoord;
 		int testVar;
 		int nodeVar;
+		simtime_t simTimer;
+		simtime_t baseTime;
+		std::list<std::string> routeNode;
+		std::string nodeHold;
+		std::list<std::string> prevRoute;
 		Coord currentPosition;
 	protected:
         virtual void onWSM(WaveShortMessage* wsm);
@@ -55,10 +67,6 @@ class TraCIDemo11p : public BaseWaveApplLayer {
 
         virtual void handleSelfMsg(cMessage* msg);
 		virtual void handlePositionUpdate(cObject* obj);
-		virtual void determineVar();
-		virtual void determineNode();
-		virtual void moveToCoord(cObject* obj);
-		virtual void confirmArrival(cObject* obj);
 };
 
 #endif

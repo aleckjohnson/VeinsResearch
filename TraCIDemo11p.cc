@@ -17,11 +17,14 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
+#include <iostream>
 #include <stdlib.h>     /* rand */
+#include <thread>
+#include <chrono>
 #include "veins/modules/application/traci/TraCIDemo11p.h"
 
 Define_Module(TraCIDemo11p);
+
 
 void TraCIDemo11p::initialize(int stage) {
     BaseWaveApplLayer::initialize(stage);
@@ -33,8 +36,32 @@ void TraCIDemo11p::initialize(int stage) {
         Coord latCoord;
         testVar = 0;
         nodeVar = 0;
+        simTimer = 50;
+        baseTime;
+        nodeHold = "";
+        prevRoute;
         Coord currentPosition;
+        //set destination Coordinates here
+        latCoord = Coord(49.578099,11.022388);
+        //new route set in doubly linked list below.
+        routeNode.push_back("9643180");
+
+        //can I force execution of movetoCoord here?
+       std::thread t1{funcCaller};
+       t1.join();
+
     }
+}
+
+void TraCIDemo11p::funcCaller(){
+    for(;;)
+              {
+               baseTime = simTime();
+               if(baseTime >= simTimer){
+                 moveToCoord();
+               }
+               std::this_thread::sleep_for(std::chrono::seconds(1));
+              }
 }
 
 void TraCIDemo11p::onWSA(WaveServiceAdvertisment* wsa) {
@@ -114,29 +141,40 @@ void TraCIDemo11p::handlePositionUpdate(cObject* obj) {
 void TraCIDemo11p::determineVar(){
     //random number generator to create test case. goes from 1 to 10.
     testVar = rand() % 10 + 1;
+
 }
 
 void TraCIDemo11p::determineNode(){
-    //random number generator to choose node. goes from 1 to 25.
+    //random number generator to choose node. goes from 1 to 25. (have to confirm veh IDs)
     nodeVar = rand() % 25 + 1;
+    nodeHold = std::to_string(nodeVar);
 }
 
-void TraCIDemo11p::moveToCoord(cObject* obj){
+void TraCIDemo11p::moveToCoord(){
+
+    //scheduleAt(simTime() + 1, moveToCoord()); //scheduling action to run again in 1 second
 //in order to move forward with how we properly want to do this we need to determine how nodes are selected for task (for now will also be random?)
     determineNode();
     //put route change command here
-    traciVehicle->changeRoute("4797871", 4);//change the parameters to include coord that you want
+    //simTimer = simTime(); //function to access the omnet simulation time counter
+    //std::cout << simTimer << endl;
+    //traciVehicle->nodeId="19";//this example spaces nodes by 6 apart on ID
+    //get old route information and store before setting new route
+    prevRoute = traciVehicle->getPlannedRoadIds();
+    traciVehicle->setNodeID("19");
+    traciVehicle->changeVehicleRoute(routeNode);//change the parameters to include coord that you want
+    }
 
-}
-
-void TraCIDemo11p::confirmArrival(cObject* obj){
+void TraCIDemo11p::confirmArrival(){
     //get current coordinates and compare them to our set point
     currentPosition = mobility->getCurrentPosition();
-    //if they match call determineVar to simulate retrieval of environmental variables
+    //set destination (goal) coordinates up at initialization stage in latCoord variable
     if (currentPosition == latCoord){
-        determineVar();
+        determineVar();//determining environmental variables externally
         std::cout<<"The Temperature is "<< testVar<< endl;
     }
+    //reroute back to original route.
+    traciVehicle->changeVehicleRoute(prevRoute);
 }
 
 
