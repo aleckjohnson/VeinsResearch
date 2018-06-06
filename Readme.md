@@ -8,6 +8,25 @@ The directory for veins is:
 
 ----
 
+## Reducing the Number of Vehicles
+
+By default, the simulation runs with 194 vehicles. The amount of vehicles can be modifed by editing erlangen.rou.xml:
+```
+~/src/veins/examples/veins/erlangen.rou.xml
+```
+
+*<!> NOTE: There are two erlangen.rou.xml. The proper one to edit is the above. The incorrect one below is an auto-generated output file. <!>*
+```
+~/src/veins/src/examples/veins/erlangen.rou.xml
+```
+
+To change the number of vehicles we value at:
+```
+<flow . . . number="195"/>
+```
+
+----
+
 ## Msg files
 
 The directory for message files in veins is:
