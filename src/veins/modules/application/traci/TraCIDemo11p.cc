@@ -48,11 +48,6 @@ void TraCIDemo11p::initialize(int stage) {
         //new route set in doubly linked list below.
         routeNode.push_back("9643180");
 
-        //can I force execution of movetoCoord here?
-        // <!> No matching constructor for intialization of std::thread <!>
-        //std::thread t1 {funcCaller};
-        //t1.join();
-
     }
 }
 

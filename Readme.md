@@ -1,19 +1,30 @@
 ## Notes
-
-#Veins
+----
+## Veins
+----
 The directory for veins is:
 	~/src/veins/
 
-#TraCI
+----
+## Msg files
+----
+The directory for message files in veins is:
+	~/src/veins/src/veins/base/messages/
+
+OMnet++ automatically generages the .cc and .h files for msg files. The usefull information will always be found in the .msg files.
+----
+## TraCI
+----
 TraCI handles the communication within/between nodes. The directory for the TraCI folder is:
-	~/src/veins/src/modules/application/traci
+	~/src/veins/src/modules/application/traci/
 
 A template for TraCI source files is found in the traci folder named:
 	MyVeinsApp.cc
 	MyVeinsApp.h
 	MyVeinsApp.ned
-
-#NED files
+----
+## NED files
+----
 RSUExampleScenario.ned
 	~/src/veins/examples/veins/RSUExampleScenario.ned
 
@@ -28,7 +39,7 @@ This .ned creates one submodule:
 
 ----
 
-RSU.net
+RSU.ned
 ~/src/veins/src/veins/nodes/RSU.ned
 
 This .ned appears to handle communication between the Network Interface Card (NIC) and the application layer. 
@@ -115,3 +126,6 @@ Has the following connections:
 	veinsradioIn --> nic.radioIn
 
 ----
+
+Nic80211p.ned
+~/src/veins/src/veins/modules/nic/Nic80211p.ned
