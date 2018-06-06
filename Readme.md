@@ -20,7 +20,7 @@ By default, the simulation runs with 194 vehicles. The amount of vehicles can be
 ~/src/veins/src/examples/veins/erlangen.rou.xml
 ```
 
-To change the number of vehicles we value at:
+To change the number of vehicles we change the value at number="":
 ```
 <flow . . . number="195"/>
 ```
