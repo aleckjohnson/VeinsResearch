@@ -1,7 +1,5 @@
 # Notes
-
-## Links
-[Veins](#veins)
+[Veins](#veins),[Reducing the Number of Vehicles](#reduce_veh)
 
 ## <a name="veins"></a>Veins
 The directory for veins is:
@@ -11,7 +9,7 @@ The directory for veins is:
 
 ----
 
-## Reducing the Number of Vehicles
+## <a name="reduce_veh"></a>Reducing the Number of Vehicles
 
 By default, the simulation runs with 194 vehicles. The amount of vehicles can be modifed by editing erlangen.rou.xml:
 ```
