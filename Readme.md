@@ -8,7 +8,7 @@ The directory for veins is:
 ```
 <br/>
 [Top](#top_of_page)
-<br/>
+
 ----
 
 ## <a name="reduce_veh"></a>Reducing the Number of Vehicles
