@@ -6,7 +6,7 @@ The directory for veins is:
 ```
 ~/src/veins/
 ```
-<br/>
+
 [Top](#top_of_page)
 
 ----
