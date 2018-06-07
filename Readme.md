@@ -1,5 +1,5 @@
 # Notes
-[Veins](#veins),[Reducing the Number of Vehicles](#reduce_veh)
+[Veins](#veins) , [Reducing the Number of Vehicles](#reduce_veh) , [Msg Files](#msg_files) , [TraCI](#traci) , [NED Files](#ned_files)
 
 ## <a name="veins"></a>Veins
 The directory for veins is:
@@ -28,7 +28,7 @@ To change the number of vehicles we change the value at number="":
 
 ----
 
-## Msg files
+## <a name="msg_files"></a>Msg files
 
 The directory for message files in veins is:
 ```
@@ -39,7 +39,7 @@ OMnet++ automatically generages the .cc and .h files for msg files. The usefull 
 
 ----
 
-## TraCI
+## <a name="traci"></a>TraCI
 
 TraCI handles the communication within/between nodes. The directory for the TraCI folder is:
 ```
@@ -56,7 +56,7 @@ MyVeinsApp.ned
 
 ----
 
-## NED files
+## <a name="ned_files"></a>NED files
 
 ### RSUExampleScenario.ned
 ```
