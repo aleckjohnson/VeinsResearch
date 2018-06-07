@@ -1,7 +1,7 @@
 # Notes
 
 ## Links
-[link](#veins) Link to veins.
+[Veins](#veins)
 
 ## <a name="veins"></a>Veins
 The directory for veins is:
