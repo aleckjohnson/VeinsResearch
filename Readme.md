@@ -60,7 +60,7 @@ TraCI handles the communication within/between nodes. The directory for the TraC
 
 A template for TraCI source files is found in the traci folder named:
 
-<ul>
+<ul style="list-style-type:none">
 	<li>MyVeinsApp.cc</li>
 	<li>MyVeinsApp.h</li>
 	<li>MyVeinsApp.ned</li>
