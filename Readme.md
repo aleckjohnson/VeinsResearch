@@ -1,6 +1,9 @@
 # Notes
 
-## Veins
+## Links
+[link](#veins) Link to veins.
+
+## <a name="veins"></a>Veins
 The directory for veins is:
 ```
 ~/src/veins/
