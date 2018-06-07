@@ -1,21 +1,37 @@
 # <a name="top_of_page"></a>Notes
-[Veins](#veins) , [Reducing the Number of Vehicles](#reduce_veh) , [Msg Files](#msg_files) , [TraCI](#traci) , [NED Files](#ned_files)
-<br/>
+[Veins](#veins) , [SUMO](#sumo) , [erlangen.rou.xml](#erlangen_rou_xml) , [Msg Files](#msg_files) , [TraCI](#traci) , [NED Files](#ned_files)
+
+---
+
+## <a name="sumo"></a>SUMO
+The directory for SUMO is:
+```
+~/src/sumo-0.30.0/
+```
+The filepath for the SUMO GUI is at:
+```
+~/src/sumo-0.30.0/bin/sumo-gui
+```
+[Top](#top_of_page)
+
+---
+
+
 ## <a name="veins"></a>Veins
 The directory for veins is:
 ```
 ~/src/veins/
 ```
-
-
 [Top](#top_of_page)
 
+---
 
-----
+## <a name="erlangen_rou_xml"></a>erlangen.rou.xml
 
-## <a name="reduce_veh"></a>Reducing the Number of Vehicles
+[Top](#top_of_page) , [File Path](#erlangen_rou_xml.file_path) , [Flow](#erlangen_rou_xml.flow)
 
-By default, the simulation runs with 194 vehicles. The amount of vehicles can be modifed by editing erlangen.rou.xml:
+#### <a name="erlangen_rou_xml.file_path"></a>File Path
+
 ```
 ~/src/veins/examples/veins/erlangen.rou.xml
 ```
@@ -24,15 +40,15 @@ By default, the simulation runs with 194 vehicles. The amount of vehicles can be
 ```
 ~/src/veins/src/examples/veins/erlangen.rou.xml
 ```
+[erlangen.rou.xml](#erlangen_rou_xml)
+#### <a name="erlangen_rou_xml.flow"></a>Flow
 
-To change the number of vehicles we change the value at number="":
+By default, the simulation runs with 194 vehicles. The amount of vehicles can be modifed by editing the attribute *number*.
+
 ```
-<flow . . . number="195"/>
+<flow . . . number=""/>
 ```
-
-
-[Top](#top_of_page)
-
+[erlangen.rou.xml](#erlangen_rou_xml)
 
 ----
 
@@ -45,9 +61,7 @@ The directory for message files in veins is:
 
 OMnet++ automatically generages the .cc and .h files for msg files. The usefull information will always be found in the .msg files.
 
-
 [Top](#top_of_page)
-
 
 ----
 
@@ -64,19 +78,16 @@ MyVeinsApp.cc
 MyVeinsApp.h
 MyVeinsApp.ned
 ```
-
 [Top](#top_of_page)
 
 
-----
+---
 
 ## <a name="ned_files"></a>NED files
 
-
 [Top](#top_of_page) , [RSUExampleScenario.ned](#rsuexamplescenario_ned) , [RSU.ned](#rsu_ned) , [Scenario.ned](#scenario_ned) , [Car.ned](#car_ned) , [Nic80211p.ned](#nic80211p.ned)
 
-
-### <a name="rsuexamplescenario_ned"></a>RSUExampleScenario.ned
+#### <a name="rsuexamplescenario_ned"></a>RSUExampleScenario.ned
 ```
 ~/src/veins/examples/veins/RSUExampleScenario.ned
 ```
@@ -92,13 +103,11 @@ This .ned creates one submodule:
 ```
 RSU[1]
 ```
-
 [NED Files](#ned_files) , [RSU.ned](#rsu_ned) , [Scenario.ned](#scenario_ned)
 
+<!-- -->
 
-----
-
-### <a name="rsu_ned"></a>RSU.ned
+#### <a name="rsu_ned"></a>RSU.ned
 ```
 ~/src/veins/src/veins/nodes/RSU.ned
 ```
@@ -122,7 +131,6 @@ It imports:
 	IWirelessMac.ned
 Nic80211p.ned
 ```
-
 Creates three (3) submodules:
 ```
 appl - ??? application layer 
@@ -136,13 +144,11 @@ nic.upperLayer <--> appl.lowerLayer
 nic.upperContro <--> appl.lowerControl
 veinsradioIn --> nic.radioIn
 ```	
-
 [NED Files](#ned_files) , [Nic80211p.ned](#nic80211p_ned)
 
+<!-- -->
 
-----
-
-### <a name="scenario_ned"></a>Scenario.ned
+#### <a name="scenario_ned"></a>Scenario.ned
 ```
 ~/src/veins/src/veins/nodes/Scenario.ned
 ```
@@ -176,10 +182,9 @@ Has no connections.
 
 [NED Files](#ned_files)
 
+<!-- -->
 
-----
-
-### <a name="car_ned"></a>Car.ned
+#### <a name="car_ned"></a>Car.ned
 ```
 ~/src/veins/src/veins/nodes/Car.ned
 ```
@@ -219,17 +224,14 @@ veinsradioIn --> nic.radioIn
 ```
 [NED Files](#ned_files) , [Nic80211p.ned](#nic80211p_ned)
 
+<!-- -->
 
-----
-
-### <a name="nic80211p_ned">Nic80211p.ned
+#### <a name="nic80211p_ned">Nic80211p.ned
 ```
 ~/src/veins/src/veins/modules/nic/Nic80211p.ned
 ```
-
-*TODO...*
+*TODO...*<br/>
 [NED Files](#ned_files)
-
 
 ----
 
