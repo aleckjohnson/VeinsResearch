@@ -6,9 +6,12 @@ The directory for veins is:
 ```
 ~/src/veins/
 ```
-[Top](top_of_page)
 
-----
+
+[Top](#top_of_page)
+
+
+====
 
 ## <a name="reduce_veh"></a>Reducing the Number of Vehicles
 
