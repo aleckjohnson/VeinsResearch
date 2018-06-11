@@ -28,7 +28,11 @@ The directory for veins is:
 
 ## <a name="erlangen_rou_xml"></a>erlangen.rou.xml
 
-[Top](#top_of_page) , [File Path](#erlangen_rou_xml.file_path) , [Flow](#erlangen_rou_xml.flow)
+[Top](#top_of_page) , [File Path](#erlangen_rou_xml.file_path) , [Structure](#erlangen_rou_xml.structure)
+
+This xml file contains the routes used by SUMO to tell it's nodes what paths they should follow. 
+
+>Quentin: I believe that this file is a good place to start. My first attempt will be to add another route and have VEINS reflect this change. 
 
 #### <a name="erlangen_rou_xml.file_path"></a>File Path
 
@@ -36,14 +40,33 @@ The directory for veins is:
 ~/src/veins/examples/veins/erlangen.rou.xml
 ```
 
-*<!> NOTE: There are two erlangen.rou.xml. The proper one to edit is the above. The incorrect one below is an auto-generated output file. <!>*
+><!> NOTE: There are two erlangen.rou.xml. The proper one to edit is the above. The incorrect one below is an auto-generated output file. <!>
 ```
 ~/src/veins/src/examples/veins/erlangen.rou.xml
 ```
 [erlangen.rou.xml](#erlangen_rou_xml)
-#### <a name="erlangen_rou_xml.flow"></a>Flow
 
-By default, the simulation runs with 194 vehicles. The amount of vehicles can be modifed by editing the attribute *number*.
+#### <a name="erlangen_rou_xml.structure"></a>Structure
+
+```
+<?xml version="1.0"?>
+<!-- 
+		Quick description of the file.
+		Credits to Christoph Sommer.
+		Liscence Info. 
+ -->
+ <routes
+		<vType .../>
+		<route .../>
+		<flow  .../>
+ /> 
+```
+
+*vType* handles vehicle information. If we want to create more varieties of vehicles we should add more *vType*.
+
+*route* is a very simple data structure. It has an id and has edges, which is a series of connected edges seperated by a single space. 
+
+*flow* requires a *vType* and a *route*. It handles the frequency, quanity, and type of nodes to be spawned for a given *route*. By default, the simulation runs with 194 vehicles. The amount of vehicles can be modifed by editing the attribute *number*.
 
 ```
 <flow . . . number=""/>
