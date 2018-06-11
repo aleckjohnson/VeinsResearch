@@ -1,5 +1,5 @@
 # <a name="top_of_page"></a>Notes
-[Veins](#veins) , [SUMO](#sumo) , [erlangen.rou.xml](#erlangen_rou_xml) , [Msg Files](#msg_files) , [TraCI](#traci) , [NED Files](#ned_files)
+[Veins](#veins) , [SUMO](#sumo) , [Erlangen](#erlangen) , [Msg Files](#msg_files) , [TraCI](#traci) , [NED Files](#ned_files)
 
 ---
 
@@ -26,9 +26,26 @@ The directory for veins is:
 
 ---
 
+# <a name="erlangen"></a>Erlangen
+[Top](#top_of_page) , [erlangen.sumo.cfg](#erlangen_sumo_cfg) , [erlangen.rou.xml](#erlangen_rou_xml)
+
+## <a name="erlangen_sumo_cfg"></a>erlangen.sumo.cfg
+[Erlangen](#erlangen)
+
+This is the configuration file for Erlangen in sumo. It should be pointed to when opening in SUMO. The filepath is:
+```
+~/src/veins/examples/veins/erlangen.sumo.cfg
+```
+To open the file in the SUMO GUI (*i.e. because you want to find edges to make a new route*), use the following command to run *SUMO-GUI* and point it the config file *erlangen.sumo.cfg*:
+```
+~/src/sumo-0.30.0/bin/sumo-gui -c ~/src/veins/examples/veins/erlangen.sumo.cfg
+```
+
+<!-- -->
+
 ## <a name="erlangen_rou_xml"></a>erlangen.rou.xml
 
-[Top](#top_of_page) , [File Path](#erlangen_rou_xml.file_path) , [Structure](#erlangen_rou_xml.structure)
+[Erlangen](#erlangen) , [File Path](#erlangen_rou_xml.file_path) , [Structure](#erlangen_rou_xml.structure)
 
 This xml file contains the routes used by SUMO to tell it's nodes what paths they should follow. 
 
