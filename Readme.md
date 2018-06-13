@@ -68,14 +68,14 @@ This xml file contains the routes used by SUMO to tell it's nodes what paths the
 ```
 <?xml version="1.0"?>
 <!-- 
-		Quick description of the file.
-		Credits to Christoph Sommer.
-		Liscence Info. 
+	Quick description of the file.
+	Credits to Christoph Sommer.
+	Liscence Info. 
  -->
  <routes
-		<vType .../>
-		<route .../>
-		<flow  .../>
+	<vType .../>
+	<route .../>
+	<flow  .../>
  /> 
 ```
 
@@ -125,7 +125,7 @@ MyVeinsApp.ned
 
 ## <a name="ned_files"></a>NED files
 
-[Top](#top_of_page) , [RSUExampleScenario.ned](#rsuexamplescenario_ned) , [RSU.ned](#rsu_ned) , [Scenario.ned](#scenario_ned) , [Car.ned](#car_ned) , [Nic80211p.ned](#nic80211p.ned)
+[Top](#top_of_page) , [RSUExampleScenario.ned](#rsuexamplescenario_ned) , [RSU.ned](#rsu_ned) , [Scenario.ned](#scenario_ned) , [Car.ned](#car_ned) , [Nic80211p.ned](#nic80211p.ned) , [BaseMobility.ned](#basemobility_ned)
 
 #### <a name="rsuexamplescenario_ned"></a>RSUExampleScenario.ned
 ```
@@ -266,11 +266,31 @@ veinsradioIn --> nic.radioIn
 
 <!-- -->
 
+#### <a name="basemobility_ned"></a>BaseMobility.ned
+```
+~/src/veins/src/veins/base/modules/BaseMobility.ned
+```
+
+Base Mobility gives a  node a static position in the world. It is part of package:
+```
+modules
+```
+If you want to give your nodes a static 2d position in the world, then add a submodule like:
+```
+mobility : BaseMobility {
+	parameters:
+		@display("i=block/cogwheel");
+}
+```
+
+[NED Files](#ned_files)
+
+<!-- -->
+
 #### <a name="nic80211p_ned">Nic80211p.ned
 ```
 ~/src/veins/src/veins/modules/nic/Nic80211p.ned
 ```
-*TODO...*<br/>
 [NED Files](#ned_files)
 
 ----
