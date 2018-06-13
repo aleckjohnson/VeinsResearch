@@ -19,8 +19,6 @@
 //
 #include <iostream>
 #include <stdlib.h>     /* rand */
-#include <thread>
-#include <chrono>
 #include "veins/modules/application/traci/TraCIDemo11p.h"
 
 Define_Module(TraCIDemo11p);
@@ -48,10 +46,11 @@ void TraCIDemo11p::initialize(int stage) {
         //new route set in doubly linked list below.
         routeNode.push_back("9643180");
 
+        //moveToCoord(); Biggest Question, How do we execute this?
     }
 }
 
-void TraCIDemo11p::funcCaller(){
+/*void TraCIDemo11p::funcCaller(){
     for(;;)
               {
                baseTime = simTime();
@@ -60,7 +59,7 @@ void TraCIDemo11p::funcCaller(){
                }
                std::this_thread::sleep_for(std::chrono::seconds(1));
               }
-}
+}*/
 
 void TraCIDemo11p::onWSA(WaveServiceAdvertisment* wsa) {
     if (currentSubscribedServiceId == -1) {
