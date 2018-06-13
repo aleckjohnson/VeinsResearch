@@ -1,6 +1,6 @@
 // Author: Quentin Goss
 // Last Modified: June 12th, 2018 at 1:37pm
-// Purpose: A point of interest.
+// Purpose: A point of interest. The goal is add a node onto the world.
 
 package org.car2x.veins.modules.poi;
 
