@@ -46,7 +46,7 @@ class TraCIDemo11p : public BaseWaveApplLayer {
         virtual void determineNode();
         virtual void moveToCoord();
         virtual void confirmArrival();
-        virtual void funcCaller();
+        //virtual void funcCaller();
 	protected:
 		simtime_t lastDroveAt;
 		bool sentMessage;
