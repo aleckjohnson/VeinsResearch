@@ -1,6 +1,13 @@
 # <a name="top_of_page"></a>Notes
 [Erlangen](#erlangen) , [Msg Files](#msg_files) , [NED Files](#ned_files) , [omnetpp.ini](#omnetpp_ini) , [SUMO](#sumo) , [TraCI](#traci) , [Veins](#veins)
 
+```
++---+ TODO +---+
+[ ] Flesh out Nic80211p.ned
+[ ] Create section for INic80211p.ned
+[ ] Create section for IBaseAppLayer.ned
+```
+
 ---
 
 # <a name="erlangen"></a>Erlangen
@@ -188,14 +195,18 @@ poi
 It imports:
 ```
 BaseMobility.ned
+IBaseApplLayer.ned
+Nic80211p.ned
 ```
 
 Creates one (1) submodule:
 ```
+appl : <applType> like org.car2x.veins.base.modules.IBaseApplLayer {...}
+nic : <nicType> like org.car2x.veins.modules.nic.INic80211p
 mobility : BaseMobility {...}
 ```
 
-[NED Files](#ned_files) , [BaseMobility.ned](#basemobility_ned)
+[NED Files](#ned_files) , [BaseMobility.ned](#basemobility_ned) , [Nic80211p.ned](#nic80211p_ned)
 
 <!-- end poi.ned -->
 <!-- begin RSU.ned -->
