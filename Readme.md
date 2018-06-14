@@ -1,28 +1,5 @@
 # <a name="top_of_page"></a>Notes
-[Veins](#veins) , [SUMO](#sumo) , [Erlangen](#erlangen) , [Msg Files](#msg_files) , [TraCI](#traci) , [NED Files](#ned_files)
-
----
-
-## <a name="sumo"></a>SUMO
-The directory for SUMO is:
-```
-~/src/sumo-0.30.0/
-```
-The filepath for the SUMO GUI is at:
-```
-~/src/sumo-0.30.0/bin/sumo-gui
-```
-[Top](#top_of_page)
-
----
-
-
-## <a name="veins"></a>Veins
-The directory for veins is:
-```
-~/src/veins/
-```
-[Top](#top_of_page)
+[Erlangen](#erlangen) , [Msg Files](#msg_files) , [NED Files](#ned_files) , [omnetpp.ini](#omnetpp_ini) , [SUMO](#sumo) , [TraCI](#traci) , [Veins](#veins)
 
 ---
 
@@ -103,122 +80,29 @@ OMnet++ automatically generages the .cc and .h files for msg files. The usefull 
 
 [Top](#top_of_page)
 
-----
-
-## <a name="traci"></a>TraCI
-
-TraCI handles the communication within/between nodes. The directory for the TraCI folder is:
-```
-~/src/veins/src/modules/application/traci/
-```
-
-A template for TraCI source files is found in the traci folder named:
-```
-MyVeinsApp.cc
-MyVeinsApp.h
-MyVeinsApp.ned
-```
-[Top](#top_of_page)
-
 
 ---
 
 ## <a name="ned_files"></a>NED files
 
-[Top](#top_of_page) , [RSUExampleScenario.ned](#rsuexamplescenario_ned) , [RSU.ned](#rsu_ned) , [Scenario.ned](#scenario_ned) , [Car.ned](#car_ned) , [Nic80211p.ned](#nic80211p.ned) , [BaseMobility.ned](#basemobility_ned)
+[Top](#top_of_page) , [BaseMobility.ned](#basemobility_ned) , [Car.ned](#car_ned) , [Nic80211p.ned](#nic80211p_ned) , [poi.ned](#poi_ned) , [RSU.ned](#rsu_ned) , [RSUExampleScenario.ned](#rsuexamplescenario_ned) , [Scenario.ned](#scenario_ned)
 
-#### <a name="rsuexamplescenario_ned"></a>RSUExampleScenario.ned
+#### <a name="basemobility_ned"></a>BaseMobility.ned
 ```
-~/src/veins/examples/veins/RSUExampleScenario.ned
-```
-This appears to be the .ned file for the veins example.
-
-It imports:
-```
-RSU.ned
-Scenario.ned
+~/src/veins/src/veins/base/modules/BaseMobility.ned
 ```
 
-This .ned creates one submodule:
+Base Mobility gives a  node a static position in the world. It is part of package:
 ```
-RSU[1]
+modules
 ```
-[NED Files](#ned_files) , [RSU.ned](#rsu_ned) , [Scenario.ned](#scenario_ned)
-
-<!-- -->
-
-#### <a name="rsu_ned"></a>RSU.ned
+If you want to give your nodes a static 2d position in the world, then add a submodule like:
 ```
-~/src/veins/src/veins/nodes/RSU.ned
+mobility : BaseMobility {
+	parameters:
+		@display("i=block/cogwheel");
+}
 ```
-
-This .ned appears to handle communication between the Network Interface Card (NIC) and the application layer. 
-
-Part of package:
-```
-nodes
-```
-
-It imports:
-```
-~/src/veins/src/veins/base/modules
-	BaseLayer.ned
-	BaseMacLayer.ned
-	BaseMobility.ned
-	BaseWorldUtility.ned
-	IBaseApplLayer.ned
-	IMobility.ned
-	IWirelessMac.ned
-Nic80211p.ned
-```
-Creates three (3) submodules:
-```
-appl - ??? application layer 
-nic - ??? a type of network interface card
-mobility - BaseMobility
-```
-	
-Has the following connections:
-```
-nic.upperLayer <--> appl.lowerLayer
-nic.upperContro <--> appl.lowerControl
-veinsradioIn --> nic.radioIn
-```	
-[NED Files](#ned_files) , [Nic80211p.ned](#nic80211p_ned)
-
-<!-- -->
-
-#### <a name="scenario_ned"></a>Scenario.ned
-```
-~/src/veins/src/veins/nodes/Scenario.ned
-```
-
-This .ned handles the visual objects in the world and also acts as a manager for the TraCIScenario.
-
-Part of package:
-```
-nodes
-```
-
-It imports:
-```
-ConnectionManager.ned
-BaseWorldUtility.ned
-TracCIScenarioManagerLanchd.ned
-ObstacleControl.ned
-AnnotationManager.ned
-```	
-
-Creates five (5) submodules:
-```
-obstacles
-annotations
-connectionManager
-world - parameters for playgroundSize X,Y,Z
-manager
-```	
-
-Has no connections.
 
 [NED Files](#ned_files)
 
@@ -264,28 +148,7 @@ veinsradioIn --> nic.radioIn
 ```
 [NED Files](#ned_files) , [Nic80211p.ned](#nic80211p_ned)
 
-<!-- -->
-
-#### <a name="basemobility_ned"></a>BaseMobility.ned
-```
-~/src/veins/src/veins/base/modules/BaseMobility.ned
-```
-
-Base Mobility gives a  node a static position in the world. It is part of package:
-```
-modules
-```
-If you want to give your nodes a static 2d position in the world, then add a submodule like:
-```
-mobility : BaseMobility {
-	parameters:
-		@display("i=block/cogwheel");
-}
-```
-
-[NED Files](#ned_files)
-
-<!-- -->
+<!-- begin nic80211p.ned -->
 
 #### <a name="nic80211p_ned">Nic80211p.ned
 ```
@@ -293,6 +156,227 @@ mobility : BaseMobility {
 ```
 [NED Files](#ned_files)
 
+<!-- end nic80211p.ned -->
+<!-- begin poi.ned -->
+
+#### <a name="poi_ned"></a>poi.ned
+```
+~/src/veins/src/veins/modules/poi/poi.ned
+```
+>Quentin: This node is created by me. It is a work in progress.
+
+This is the .ned file for our Point of Interest nodes, created by Quentin -- The progress of this node is shown below:
+
+```
++------+ Progress +------+
+
+[X] Act as a visual Point of Interest.
+[X] Be placed somewhere in the world.
+[ ] Send a packet to a vehicle.
+[ ] Retrieve a packet from a vehicle.
+[ ] Limit communication to vehicles in a specific radius.
+[ ] Store an "incentive weight" in a variable.
+[ ] Decrease "incentive weight" when a vehicle comes by.
+[ ] Increase "incentive weight" over time.
+```
+
+Part of package:
+```
+poi
+```
+
+It imports:
+```
+BaseMobility.ned
+```
+
+Creates one (1) submodule:
+```
+mobility : BaseMobility {...}
+```
+
+[NED Files](#ned_files) , [BaseMobility.ned](#basemobility_ned)
+
+<!-- end poi.ned -->
+<!-- begin RSU.ned -->
+
+#### <a name="rsu_ned"></a>RSU.ned
+```
+~/src/veins/src/veins/nodes/RSU.ned
+```
+
+This .ned appears to handle communication between the Network Interface Card (NIC) and the application layer. 
+
+Part of package:
+```
+nodes
+```
+
+It imports:
+```
+~/src/veins/src/veins/base/modules
+	BaseLayer.ned
+	BaseMacLayer.ned
+	BaseMobility.ned
+	BaseWorldUtility.ned
+	IBaseApplLayer.ned
+	IMobility.ned
+	IWirelessMac.ned
+Nic80211p.ned
+```
+Creates three (3) submodules:
+```
+appl - ??? application layer 
+nic - ??? a type of network interface card
+mobility - BaseMobility
+```
+	
+Has the following connections:
+```
+nic.upperLayer <--> appl.lowerLayer
+nic.upperContro <--> appl.lowerControl
+veinsradioIn --> nic.radioIn
+```	
+[NED Files](#ned_files) , [Nic80211p.ned](#nic80211p_ned)
+
+<!-- end RSU.ned -->
+<!-- begin RSUExampleScenario.ned -->
+
+#### <a name="rsuexamplescenario_ned"></a>RSUExampleScenario.ned
+```
+~/src/veins/examples/veins/RSUExampleScenario.ned
+```
+This appears to be the .ned file for the veins example.
+
+It imports:
+```
+RSU.ned
+Scenario.ned
+poi.ned //<-- Added by Quentin
+```
+
+This .ned creates two submodules:
+```
+rsu[1]: RSU {...}
+poi[1]: poi {...} //<-- Added by Quentin
+```
+
+[NED Files](#ned_files) , [poi.ned](#poi_ned) , [RSU.ned](#rsu_ned) , [Scenario.ned](#scenario_ned)
+
+<!-- end RSUExampleScenario.ned -->
+<!-- begin Scenario.ned -->
+
+#### <a name="scenario_ned"></a>Scenario.ned
+```
+~/src/veins/src/veins/nodes/Scenario.ned
+```
+
+This .ned handles the visual objects in the world and also acts as a manager for the TraCIScenario.
+
+Part of package:
+```
+nodes
+```
+
+It imports:
+```
+ConnectionManager.ned
+BaseWorldUtility.ned
+TracCIScenarioManagerLanchd.ned
+ObstacleControl.ned
+AnnotationManager.ned
+```	
+
+Creates five (5) submodules:
+```
+obstacles
+annotations
+connectionManager
+world - parameters for playgroundSize X,Y,Z
+manager
+```	
+
+Has no connections.
+
+[NED Files](#ned_files)
+
+<!-- -->
+
+---
+
+## <a name="omnetpp_ini"></a>omnetpp.ini
+
+[Top](#top_of_page) , [BaseMobility configuration](#omnetpp_ini.baseMobility_configuration)
+
+```
+~/src/veins/examples/veins/omnetpp.ini
+```
+
+This is the configuration file for the [RSUExampleScenario](#rsuexamplescenario_ned). Sections that were added by us are as follows:
+```
+POI Settings
+```
+
+#### <a name="omnetpp_ini.baseMobility_configuration"></a>BaseMobility configuration
+When assigning BaseMobility as a submodule to a node, one must specify an *x*, *y*, and *z* position. This is done in the configuration file.
+```
+#### Sample Assignment ####
+*.poi[0].mobility.x = 1950
+*.poi[0].mobility.y = 1500
+*.poi[0].mobility.z = 3 # <-- ??? Unsure about z position for now.
+
+#### Magnitude #####
++---------> 
+|      x goes from LEFT to RIGHT.
+|
+|
+| y goes from TOP to BOTTOM.
+V
+```
+
+[omnetpp.ini](#omnetpp_ini) , [BaseMobility.ned](#basemobility_ned)
+
+---
+
+## <a name="sumo"></a>SUMO
+The directory for SUMO is:
+```
+~/src/sumo-0.30.0/
+```
+The filepath for the SUMO GUI is at:
+```
+~/src/sumo-0.30.0/bin/sumo-gui
+```
+[Top](#top_of_page)
+
 ----
+
+## <a name="traci"></a>TraCI
+
+TraCI handles the communication within/between nodes. The directory for the TraCI folder is:
+```
+~/src/veins/src/modules/application/traci/
+```
+
+A template for TraCI source files is found in the traci folder named:
+```
+MyVeinsApp.cc
+MyVeinsApp.h
+MyVeinsApp.ned
+```
+[Top](#top_of_page)
+
+---
+
+## <a name="veins"></a>Veins
+The directory for veins is:
+```
+~/src/veins/
+```
+[Top](#top_of_page)
+
+---
+
+End of file.
 
 [Top](#top_of_page)
