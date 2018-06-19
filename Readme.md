@@ -420,19 +420,44 @@ The filepath for the SUMO GUI is at:
 ----
 
 ## <a name="traci"></a>TraCI
+[Top](#top_of_page) , [TraCIDemo11p](#traci.tracidemo11p)
 
 TraCI handles the communication within/between nodes. The directory for the TraCI folder is:
 ```
 ~/src/veins/src/modules/application/traci/
 ```
+TraCI is an important player in the application layer, which the layer that we will be performing most of our work on. Some notable modules are:
+```
+     MyVeinsApp <-- A template for application layer modules
+TraCIDemoRSU11p <-- Tutorial RSU node
+   TraCIDemo11p <-- Tutorial Car nodes (node[*])
+ChangeRouteTest <-- Quentin's attempt to change car route
+```
 
-A template for TraCI source files is found in the traci folder named:
+<!-- begin TraCIDemo11p -->
+
+#### <a name="traci.tracidemo11p"></a>TraCIDemo11p
+TraCIDemo11p is the application type module for the car nodes. It consists of three (3) files:
 ```
-MyVeinsApp.cc
-MyVeinsApp.h
-MyVeinsApp.ned
+TraCIDemo11p.ned
+TraCIDemo11p.h
+TraCIDemo11p.cc
 ```
-[Top](#top_of_page)
+Notably in the *initialize* function we see:
+```
+//set destination Coordinates here
+lastCoord = Coord(49.578099,11.022388);
+
+//new route set in doubly linked list below
+routeNode.push_back("9643180");
+```
+The numbers **49.579099** and **11.022388** are *Latitude* and *Longitude* coordinates respectively from the Erlangen map. The number **9643180** appears to be an edge on the map nearby the coordinates.
+<br/>
+![TraCIDemo11p.cc.latCoord.gif](./assets/application/TraCI/TraCIDemo11p.cc.latCoord.gif)
+
+[TraCI](#traci) , [Erlangen](#erlangen)
+
+<!-- end TraCIDemo11p -->
 
 ---
 
