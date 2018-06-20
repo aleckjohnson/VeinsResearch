@@ -20,12 +20,15 @@
 
 class ChangeRouteTest : public BaseWaveApplLayer{
     public:
-        virtual void initialize(int stage);
+        virtual void initialize(int n_stage);
+        //Testing
+        virtual void test_simTime();
     protected:
-        simtime_t lastDroveAt;
+        simtime_t st_last_drove_at;
     protected:
-        // Currently has no visible effect.
-        //virtual void handlePositionUpdate(cObject* obj);
+        virtual void onWSM(WaveShortMessage* wsm);
+
+        virtual void handleSelfMsg(cMessage* msg);
 };
 
 #endif
