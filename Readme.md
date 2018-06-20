@@ -420,7 +420,7 @@ The filepath for the SUMO GUI is at:
 ----
 
 ## <a name="traci"></a>TraCI
-[Top](#top_of_page) , [TraCIDemo11p](#traci.tracidemo11p)
+[Top](#top_of_page) , [ChangeRouteTest](#traci.changeroutetest) , [TraCIDemo11p](#traci.tracidemo11p)
 
 TraCI handles the communication within/between nodes. The directory for the TraCI folder is:
 ```
@@ -434,6 +434,45 @@ TraCIDemoRSU11p <-- Tutorial RSU node
 ChangeRouteTest <-- Quentin's attempt to change car route
 ```
 
+<!-- begin ChangeRouteTest -->
+
+#### <a name="traci.changeroutetest"></a>ChangeRouteTest
+The directory of the ChangeRouteTest module is in a subdirectory of the stock Veins files:
+```
+~/src/veins/src/modules/application/traci/ChangeRouteTest/
+```
+ChangeRouteTest is a module created by Quentin to learn how the car nodes function on the application layer. It consists of three (3) files:
+```
+ChangeRouteTest.ned
+ChangeRouteTest.h
+ChangeRouteTest.cc
+```
+The printed method output for **ChangeRouteTest::initilize(int n_stage)** can be found in the component log of *manager* as a self message just before a car node (*node[\*]*) is created (*below*).
+>Quentin: The best way to located this is to start the simulation and do one (1) step at a time until the first car appears (*node[0]*), then check *manager*'s componet log history.
+
+The output will look something like:
+```
+** Event #24 t=1 RSUExampleScenario.manager (TraCIScenarioManagerLaunchd, id=6) on selfmsg step (omnetpp::cMessage, id=12)
+...
+INFO (ChangeRouteTest)RSUExampleScenario.node[0].appl: RSUExampleScenario.node[0].appl: Initializing... ChangeRouteTest!
+...
+```
+![ChangeRouteTest.initialize](./assets/application/TraCI/ChangeRouteTest.initialize.gif)
+
+All other methods in *ChangeRouteTest.cc*, the printed method output can be found in the component log of *node[\*]*. For reference, notice Event #51 (*below*) which is simple message printed to the console to let us know that the **ChangeRouteTest::handleSelfMessage(cMessage\* msg)** method has been called.
+```
+** Event #51 t=1.963662764058 RSUExampleScenario.node[0].appl (ChangeRouteTest, id=20) on selfmsg beacon evt (omnetpp::cMessage, id=43)
+INFO (ChangeRouteTest)RSUExampleScenario.node[0].appl: ChangeRouteTest is handling a self-message!
+INFO (ChangeRouteTest)RSUExampleScenario.node[0].appl: --> OwO <-- Notice me! --> OwO <--
+INFO (ChangeRouteTest)RSUExampleScenario.node[0].appl: st_last_drove_at changing from 1 to 1.963662764058.
+```
+
+![Finding ChangeRouteTest in the Component Log](./assets/application/TraCI/ChangeRouteTest_in_the_component_log.gif)
+
+[Traci](#traci)
+
+<!-- end ChangeRouteTest -->
+
 <!-- begin TraCIDemo11p -->
 
 #### <a name="traci.tracidemo11p"></a>TraCIDemo11p
@@ -443,6 +482,10 @@ TraCIDemo11p.ned
 TraCIDemo11p.h
 TraCIDemo11p.cc
 ```
+
+##### <a name="traci.tracidemo11p.deprecated"></a>Deprecated
+>Quentin: At first I thought this was stock code, however I later found that it was added by Aleck. It is currently incomplete or abandoned.
+
 Notably in the *initialize* function we see:
 ```
 //set destination Coordinates here
