@@ -1,11 +1,13 @@
 # <a name="top_of_page"></a>Notes
 [Erlangen](#erlangen) , [Msg Files](#msg_files) , [NED Files](#ned_files) , [omnetpp.ini](#omnetpp_ini) , [SUMO](#sumo) , [TraCI](#traci) , [Veins](#veins)
 
+There are two parts to this code repository, **veins_master** contains relavent files for Veins and **sumo_master** which contains relavent files for SUMO/TraCI work that is independent of our veins project.
+
 ```
-+---+ Todo +---+
-[ ] Find out how a message is sent from poi[0] to car[*]
-[ ] Alter the msg to make it display something on the console.
++---+ TODO +---+
+[ ] Create a second Readme.md for standalone SUMO/TraCI notes
 ```
+
 ---
 
 # <a name="erlangen"></a>Erlangen
@@ -414,6 +416,10 @@ The directory for SUMO is:
 The filepath for the SUMO GUI is at:
 ```
 ~/src/sumo-0.30.0/bin/sumo-gui
+```
+The filepath for NetConvert is:
+```
+~/src/sumo-0.30.0/bin/netconvert
 ```
 [Top](#top_of_page)
 
