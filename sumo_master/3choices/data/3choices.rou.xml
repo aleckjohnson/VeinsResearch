@@ -1,0 +1,23 @@
+<routes>
+	<vType 
+		accel="0.5" decel="5.0" id="v_car" length="2.0" maxSpeed="100.0" sigma="0.5" 
+	/>
+	
+	<route id="r_top" edges="gneE0 gneE5 gneE6 gneE4" />
+	<route id="r_middle" edges="gneE0 gneE2 gneE4" />
+	<route id="r_bottom" edges="gneE0 gneE7 gneE8 gneE4" />
+	
+	<!--
+	<flow 
+		id="f_top" type="v_car" route="r_top" begin="1" period="3" number="100" 
+	/>
+	-->
+	<flow 
+		id="f_middle" type="v_car" route="r_middle" begin="1" period="3" number="100" 
+	/>
+	<!--
+	<flow
+	 	id="f_bottom" type="v_car" route="r_bottom" begin="1" period="3" number="100" 
+ 	/>
+	-->
+</routes>
