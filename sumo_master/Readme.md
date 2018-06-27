@@ -7,7 +7,7 @@
 ---
 
 ## <a name="projects"></a>Projects
-[Top](#top_of_page) , [3choices](#projects.3choices) , [intersection_1](#project.intersection_1) , [my_first_project](#projects.my_first_project)
+[Top](#top_of_page) , [3choices](#projects.3choices) , [intersection_1](#projects.intersection_1) , [my_first_project](#projects.my_first_project)
 
 <!-- begin 3choices -->
 ### <a name="projects.3choices"></a>3choices
