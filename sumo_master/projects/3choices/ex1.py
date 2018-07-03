@@ -1,22 +1,27 @@
-"""
-@file   runner.py
-@author Quentin Goss
-@date   6/26/18
-"""
-#from __future__ import absolute_import
-#from __future__ import print_function
-
-#import os
+##############################
+# @file   ex1.py
+# @author Quentin Goss
+# @date   7/3/18
+#
+# This is the first attempt at using TraCI and python alongside SUMO.
+# The goals of this script:
+# [x] Run without error.
+# [x] Create a route file.
+# [x] Launch SUMO as a subprocess through TraCI.
+# [x] Implement a very basic TraCI Control Loop.
+#
+##############################
+import os
 import sys
 import optparse
-#import subprocess
 import random
 
 ###############################
 #      Global Variables
 ###############################
+S_ABSOLUTE_PATH = os.path.dirname(os.path.abspath(__file__))
 S_SUMO_TOOLS_DIR = "/home/veins/src/sumo-0.30.0/tools"
-S_ROUTE_FILE = "./data/3choices.rou.xml"
+S_ROUTE_FILE = S_ABSOLUTE_PATH + "/data/3choices.rou.xml"
 N_SEED = 777333
 N_TIME_STEPS=3000
 N_VEHICLE_SPAWN_RATE=10 # How many time steps between vehicle spawn?
@@ -25,6 +30,7 @@ S_VTYPE = """<vType id="chevy_s10" accel="0.6" decel="1.3" sigma="0.4" length="5
 S_ROUTE_TOP = """<route id="top" edges="gneE0 gneE5 gneE6 gneE4" />"""
 S_ROUTE_MIDDLE = """<route id="middle" edges="gneE0 gneE2 gneE4" />"""
 S_ROUTE_BOTTOM = """<route id="bottom" edges="gneE0 gneE7 gneE8 gneE4"/>"""
+
 
 ###############################
 #      Import sumolib
@@ -44,7 +50,7 @@ import traci
 def get_options():
   opt_parser = optparse.OptionParser()
   opt_parser.add_option("--nogui",action="store_true",default=False, help="run the commandline version of sumo")
-  opt_parser.add_option("--debug",action="store_true",default=True, help="Adds additional print statements for debugging.")
+  opt_parser.add_option("--debug",action="store_true",default=False, help="Adds additional print statements for debugging.")
   options, args = opt_parser.parse_args()
   
   # Set our debug global so we only check once
@@ -129,6 +135,9 @@ def run():
   
   while traci.simulation.getMinExpectedNumber() > 0:
     traci.simulationStep()
+    
+    # TraCI stuff happens here
+    
     n_step += 1
   # end while
   
@@ -159,14 +168,16 @@ def main():
     # We need to generate a routefile for this simulation
     generate_routefile()
     
-    # Have TraCI start sumo as a subprocess, then we th python script
+    # Have TraCI start sumo as a subprocess, then the python script
     # can connect and run
-    sumo_cmd = [s_sumo_binary, "-c", "./data/3choices.sumocfg"]
+    global S_ABSOLUTE_PATH
+    s_sumocfg_path = S_ABSOLUTE_PATH + "/data/3choices.sumocfg"
+    debug("s_sumocfg_path="+s_sumocfg_path)
+    
+    sumo_cmd = [s_sumo_binary, "-c", s_sumocfg_path]
     traci.start(sumo_cmd)
     
     run()
-  else:
-    debug("I'm being called from another script.")
 # End main
 
 
