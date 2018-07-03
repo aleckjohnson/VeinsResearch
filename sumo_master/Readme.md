@@ -11,26 +11,100 @@
 
 <!-- begin 3choices -->
 ### <a name="projects.3choices"></a>3choices
+[Projects](#projects) , [ex1.py](#projects.3choices.ex1)
 
 ![3choices.gif](./assets/screenshots/projects/3choices.gif)
 <br/>
 Like the namesake of the project, there are three routes that a vehicle may take to get from the left to the right -- these choices are *top*, *middle*, or *bottom*.
 
 >Quentin: This project is currently under construction.
+
+<!-- begin ex1.py -->
+#### <a name="projects.3choices.ex1_py"></a>ex1.py
+![3choices.ex1.gif](./assets/screenshots/projects/3choices.ex1.gif)
+<br/>
+The first example we created that used TraCI and also dynamically creates a *.rou.xml* file. Here, we use python to write routes that randomly assigns vehicles to either the routes, *top*, *middle*, or *bottom*.
+>Quentin: Note that we are using python to write a *.rou.xml* file *before* we connect TraCI to SUMO and that we are not using TraCI API for route creation.
+
+The filepath for *ex1.py* is:
 ```
-+---+ TODO +---+
-[ ] Point python to the TraCI libraries.
-[ ] Load the project without any errors.
-[ ] Create a vehicle type.
-[ ] Create a route. Call it "middle".
-[ ] Assign "middle" to a vehicle.
-[ ] Create a second route. Call it "top."
-[ ] Assign "top" to a second vehicle.
-[ ] Create a third route. Call it "bottom."
-[ ] Assign "bottom" to a third vehicle.
+~/src/VeinsResearch/sumo_master/projects/3choices/ex1.py
+```
+*ex1.py* can be run with the following command:
+```
+# Within the 3choices/ folder.
+python3 ex1.py
+
+# From anywhere.
+python3 ~/src/VeinsResearch/sumo_master/projects/3choices/ex1.py
+```
+*ex1.py* has the following optional flags:
+```
+--nogui # default(False) - use sumo instead of sumo-gui
+--debug # default(False) - verbose mode
+```
+Importing the SUMO python library is wordy but essential:
+```
+# The folder where the SUMO binaries are located
+S_SUMO_TOOLS_DIR = "/home/veins/src/sumo-0.30.0/tools"
+
+# Point python to this path.
+try:
+	sys.path.append(S_SUMO_TOOLS_DIR)
+	from sumolib import checkBinary
+	
+except ImportError:
+	sys.exit("Could not locate sumolib in " + S_SUMO_TOOLS_DIR + ".")
+	
+# And finally...
+import traci
 ```
 
-[Projects](#projects)
+To connect TraCI to SUMO we must first locate where know where the *sumo* or *sumo-gui* binary is.
+```
+if (options.nogui):
+	s_sumo_binary = checkBinary('sumo')
+else:
+	s_sumo_binary = checkBinary('sumo-gui')
+```
+Then, we have TraCI start sumo as a subprocess, which allows our TraCI python script to connect to the SUMO process which enables the use of the TraCI API.
+```
+# The absolute path of ex1.py
+global S_ABSOLUTE_PATH
+
+# The path to our configuration file.
+s_sumocfg_path = S_ABSOLUTE_PATH + "/data/3choices.sumocfg"
+
+# We put this together into a command.
+# This is equivalent to: sumo-gui -c 3choices.sumocfg
+sumo_cmd = [s_sumo_binary, "-c", s_sumocfg_path]
+
+# Once our command is built, we have TraCI execute it.
+traci.start(sumo_cmd)
+
+# Now that SUMO is started, we can begin the TraCI control loop
+run()
+```
+*run()* is a method we created that contains the TraCI control loop. The TraCI control loop is where the TraCI API commands go.
+```
+def run():
+	# The current simulation step.
+	n_step = 0
+	
+	# While there are still cars waiting to spawn.
+	while traci.simulation.getMinExpectedNumber() > 0:
+		
+		# Perform TraCI stuff here
+		
+		#increment step
+		n_step += 1
+	
+	# The simulation is over. Close and end.
+	traci.close()
+```
+
+[3choices](#projects.3choices)
+<!-- end ex1.py -->
 <!-- end 3choices -->
 
 <!-- begin intersection_1 -->
