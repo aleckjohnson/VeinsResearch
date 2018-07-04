@@ -108,6 +108,19 @@ def run():
 #### <a name="projects.3choices.ex2_py"></a>ex2.py
 Continuing from what we've learned from *ex1.py*, our python script *ex2.py* utilizes the TraCI API to create vehicles and assign them to routes. The differences between *ex1.py* and *ex2.py* will be explained in this section.
 
+The filepath for *ex2.py* is:
+```
+~/src/VeinsResearch/sumo_master/projects/3choices/ex2.py
+```
+*ex2.py* can be run with the following command:
+```
+# Within the 3choices/ folder.
+python3 ex2.py
+
+# From anywhere.
+python3 ~/src/VeinsResearch/sumo_master/projects/3choices/ex2.py
+```
+
 ##### Edit #1 - A smaller route file.
 The *generate_routefile()* no longer creates vehicles, we will be doing this with the TraCI API in the TraCI control loop.
 
