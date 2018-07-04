@@ -24,8 +24,10 @@ import random
 S_ABSOLUTE_PATH = os.path.dirname(os.path.abspath(__file__))
 S_SUMO_TOOLS_DIR = "/home/veins/src/sumo-0.30.0/tools"
 S_ROUTE_FILE = S_ABSOLUTE_PATH + "/data/3choices.rou.xml"
+S_SUMOCFG_FILE = S_ABSOLUTE_PATH + "/data/3choices.sumocfg"
 N_SEED = 777333
 N_TIME_STEPS=3000
+N_VEHICLE_SPAWN_RATE=10 # How many time steps between new vehicles spawning?
 IS_DEBUG = False
 S_VTYPE = """<vType id="chevy_s10" accel="0.6" decel="1.3" sigma="0.4" length="5" minGap="2.5" maxSpeed="10" guiShape="passenger"/>"""
 S_ROUTE_TOP = """<route id="top" edges="gneE0 gneE5 gneE6 gneE4" />"""
@@ -107,12 +109,37 @@ def generate_routefile():
 #  without error.
 ###############################
 def run():
+  global N_VEHICLE_SPAWN_RATE
+  global N_SEED
+  global N_TIME_STEPS
+  n_vehicles = 0
+  s_vehicle_id = ""
+  random.seed(N_SEED)
+  
   n_step = 0
   
-  while traci.simulation.getMinExpectedNumber() > 0:
+  while (n_step < N_TIME_STEPS):
     traci.simulationStep()
     
-    # TraCI stuff happens here
+    # Add some vehicles
+    if (n_step % N_VEHICLE_SPAWN_RATE == 0):
+      n_random_int = random.randint(1,3)
+      s_vehicle_id = "veh"+str(n_vehicles)
+      
+      if (n_random_int == 1): 
+        traci.vehicle.add(s_vehicle_id, "top", depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="chevy_s10")
+        traci.vehicle.setColor(s_vehicle_id,(255,0,0,0))
+        
+      elif(n_random_int == 2):
+        traci.vehicle.add(s_vehicle_id, "middle", depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="chevy_s10")
+        traci.vehicle.setColor(s_vehicle_id,(0,255,0,0))
+        
+      else:
+        traci.vehicle.add(s_vehicle_id, "bottom", depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="chevy_s10")
+        traci.vehicle.setColor(s_vehicle_id,(0,0,255,0))
+        
+      n_vehicles += 1
+    # end if (n_step % N_VEHICLE_SPAWN_RATE == 0):
     
     n_step += 1
   # end while
@@ -146,11 +173,10 @@ def main():
     
     # Have TraCI start sumo as a subprocess, then the python script
     # can connect and run
-    global S_ABSOLUTE_PATH
-    s_sumocfg_path = S_ABSOLUTE_PATH + "/data/3choices.sumocfg"
-    debug("s_sumocfg_path="+s_sumocfg_path)
+    global S_SUMOCFG_FILE
+    debug("S_SUMOCFG_FILE="+S_SUMOCFG_FILE)
     
-    sumo_cmd = [s_sumo_binary, "-c", s_sumocfg_path]
+    sumo_cmd = [s_sumo_binary, "-c", S_SUMOCFG_FILE]
     traci.start(sumo_cmd)
     
     run()
