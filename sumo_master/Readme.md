@@ -174,8 +174,8 @@ def run():
 ```		
 
 ##### Method Documentation
-[TraCI/Change Vehicle State wiki link](www.sumo.dlr.de/wiki/TraCI/Change_Vehicle_State#add_.280x80.29)
-<br/>[traci.vehicle Python module wiki link](www.sumor.dlr.de/pydoc/traci._vehicle.html)
+[TraCI/Change Vehicle State wiki link](http://sumo.dlr.de/wiki/TraCI/Change_Vehicle_State#add_.280x80.29)
+<br/>[traci.vehicle Python module wiki link](http://sumo.dlr.de/pydoc/traci._vehicle.html)
 
 
 
