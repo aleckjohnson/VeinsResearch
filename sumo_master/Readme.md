@@ -11,7 +11,7 @@
 
 <!-- begin 3choices -->
 ### <a name="projects.3choices"></a>3choices
-[Projects](#projects) , [ex1.py](#projects.3choices.ex1_py)
+[Projects](#projects) , [ex1.py](#projects.3choices.ex1_py) , [ex2.py](#projects.3choices.ex2_py)
 
 ![3choices.gif](./assets/screenshots/projects/3choices.gif)
 <br/>
@@ -102,9 +102,85 @@ def run():
 	# The simulation is over. Close and end.
 	traci.close()
 ```
-
 [3choices](#projects.3choices)
 <!-- end ex1.py -->
+<!-- begin ex2.py -->
+#### <a name="projects.3choices.ex2_py"></a>ex2.py
+Continuing from what we've learned from *ex1.py*, our python script *ex2.py* utilizes the TraCI API to create vehicles and assign them to routes. The differences between *ex1.py* and *ex2.py* will be explained in this section.
+
+##### Edit #1 - A smaller route file.
+The *generate_routefile()* no longer creates vehicles, we will be doing this with the TraCI API in the TraCI control loop.
+
+##### Edit #2 - An improved TraCI control loop.
+The *run()* method with contains the TraCI control loop is the meat of the changes between *ex1.py* and *ex2.py*
+```
+def run():
+	# Here we initialize the variables we will be using.
+	global N_VEHICLE_SPAWN_RATE
+	global N_SEED
+	global N_TIME_STEPS
+	n_vehicles = 0
+	s_vehicle_id = ""
+	random.seed(N_SEED)
+	
+	n_step = 0
+	
+	# We change the condition our TraCI control loop to
+	# continue until a completion time. In ex1.py, the
+	# condition was to run until all vehicles from the
+	# 3choices.rou.xml were created/completed, but since
+	# we're creating them all with the TraCI API, we must
+	# use another condition.
+	while (n_step < N_TIME_STEPS):
+	
+		# We will create a new vehicle every 10 time steps
+		if (n_step % N_VEHICLE_SPAWN_RATE == 0):
+		
+			# Now we randomly assign the vehicles one of the
+			# three routes.
+			n_random_int = random.randint(1,3)
+			s_vehicle_id = "veh"+str(n_vehicles)
+			
+			# Top
+			if (n_random_int == 1):
+			
+				# We can add a vehicle with traci.vehicle.add()
+				traci.vehicle.add(s_vehicle_id, "top", depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="chevy_s10")
+				
+				# And set it's color with traci.vehicle.setColor()
+				# Note that for more solid colors, use 255.
+				# There are 4 parameters in the order
+				# (red, blue, green, gamma)
+				traci.vehicle.setColor(s_vehicle_id,(255,0,0,0))
+				
+			# Middle
+			elif (n_random_int == 2):
+				traci.vehicle.add(s_vehicle_id, "middle", depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="chevy_s10")
+				traci.vehicle.setColor(s_vehicle_id,(0,255,0,0))
+				
+			# Bottom
+			else:
+				traci.vehicle.add(s_vehicle_id, "bottom", depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="chevy_s10")
+				traci.vehicle.setColor(s_vehicle_id,(0,0,255,0))
+				
+			n_vehicles += 1 # increment vehicle counter
+		# end if (n_step % N)VEHICLE_SPAWN_RATE == 0)
+		
+		n_step += 1
+	# end while >> TraCI control Loop
+	
+	traci.close()
+# end run()
+```		
+
+##### Method Documentation
+[TraCI/Change Vehicle State wiki link](www.sumo.dlr.de/wiki/TraCI/Change_Vehicle_State#add_.280x80.29)
+<br/>[traci.vehicle Python module wiki link](www.sumor.dlr.de/pydoc/traci._vehicle.html)
+
+
+
+[3choices](#projects.3choices)
+<!-- end ex2.py -->
 <!-- end 3choices -->
 
 <!-- begin intersection_1 -->
