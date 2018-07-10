@@ -11,7 +11,7 @@
 
 <!-- begin 3choices -->
 ### <a name="projects.3choices"></a>3choices
-[Projects](#projects) , [ex1.py](#projects.3choices.ex1_py) , [ex2.py](#projects.3choices.ex2_py)
+[Projects](#projects) , [ex1.py](#projects.3choices.ex1_py) , [ex2.py](#projects.3choices.ex2_py) , [ex3](#projects.3choices.ex3) , [ex4](#projects.3choices.ex4) , [template](#projects.3choices.template)
 
 ![3choices.gif](./assets/screenshots/projects/3choices.gif)
 <br/>
