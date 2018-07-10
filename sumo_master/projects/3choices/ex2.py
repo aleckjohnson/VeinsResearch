@@ -109,9 +109,9 @@ def generate_routefile():
 #  without error.
 ###############################
 def run():
-  global N_VEHICLE_SPAWN_RATE
-  global N_SEED
-  global N_TIME_STEPS
+  global N_VEHICLE_SPAWN_RATE # 10
+  global N_SEED #777333
+  global N_TIME_STEPS # 3000
   n_vehicles = 0
   s_vehicle_id = ""
   random.seed(N_SEED)
@@ -122,19 +122,19 @@ def run():
     traci.simulationStep()
     
     # Add some vehicles
-    if (n_step % N_VEHICLE_SPAWN_RATE == 0):
-      n_random_int = random.randint(1,3)
-      s_vehicle_id = "veh"+str(n_vehicles)
+    if (n_step % N_VEHICLE_SPAWN_RATE == 0): # Every 10 timesteps make a new vehicle
+      n_random_int = random.randint(1,3) # Random between 1-3
+      s_vehicle_id = "veh"+str(n_vehicles) # ehicle ID
       
-      if (n_random_int == 1): 
+      if (n_random_int == 1): # Top
         traci.vehicle.add(s_vehicle_id, "top", depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="chevy_s10")
         traci.vehicle.setColor(s_vehicle_id,(255,0,0,0))
         
-      elif(n_random_int == 2):
+      elif(n_random_int == 2): # Middle
         traci.vehicle.add(s_vehicle_id, "middle", depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="chevy_s10")
         traci.vehicle.setColor(s_vehicle_id,(0,255,0,0))
         
-      else:
+      else: # Bottom
         traci.vehicle.add(s_vehicle_id, "bottom", depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="chevy_s10")
         traci.vehicle.setColor(s_vehicle_id,(0,0,255,0))
         
