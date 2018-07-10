@@ -133,7 +133,7 @@ LS_EDGES = []
 ###############################
 # Add element(s) to routefiles
 #
-# @return string = The elements that will be added to the #                             routefile.
+# @return string = The elements that will be added to the routefile.
 ###############################
 def generate_elements(): 
   s_elements = "\t" + config.s_vtype + "\n"
