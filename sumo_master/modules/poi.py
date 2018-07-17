@@ -16,6 +16,17 @@ class poi:
         n_numHits = 0 #initialize all required variables
 
     def __del__(self): #default deconstructor
+        # We use the deconstructor to free up memory when we don't need
+        # the POI node anymore
+        del s_UID
+        del f_CoordX
+        del f_CoordY
+        del f_CoordZ
+        del n_Value
+        del s_AccidentID
+        del t_PrevHitTime
+        del t_newTimeOfHit
+        del n_numHits
         
 
         
@@ -60,11 +71,11 @@ class poi:
     def setHitTotal(currentHits):
         n_numHits = currentHits
 #End of Setters/Getters
-
+    # There are no ++ or -- operations in python. Instead use += 1 and -= 1
     def increaseValue():
-        n_Value++
+        n_Value += 1
     def decreaseValue():
-        n_Value--
+        n_Value -= 1
 
     def accidentOccur():
         #Obtain Vehicle ID
