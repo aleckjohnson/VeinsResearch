@@ -1,0 +1,51 @@
+Warning: Teleporting vehicle 'veh12'; waited too long (yield), lane='-gneE5_0', time=908.00.
+Warning: Vehicle 'veh12' ends teleporting on edge 'gneE2', time 908.00.
+Warning: Teleporting vehicle 'veh20'; waited too long (jam), lane='-gneE7_0', time=954.00.
+Warning: Vehicle 'veh20' ends teleporting on edge 'gneE2', time 954.00.
+Warning: Teleporting vehicle 'veh32'; waited too long (yield), lane='gneE0_0', time=1049.00.
+Warning: Vehicle 'veh32' teleports beyond arrival edge 'gneE2', time 1094.00.
+Warning: Vehicle 'veh32' skips stop on lane 'gneE2_0' time=1094.00.
+Warning: Teleporting vehicle 'veh24'; waited too long (yield), lane='gneE2_0', time=1224.00.
+Warning: Vehicle 'veh24' ends teleporting on edge '-gneE6', time 1244.00.
+Warning: Teleporting vehicle 'veh26'; waited too long (yield), lane='gneE0_0', time=1781.00.
+Warning: Vehicle 'veh26' ends teleporting on edge 'gneE2', time 1781.00.
+Warning: Teleporting vehicle 'veh34'; waited too long (yield), lane='-gneE5_0', time=1796.00.
+Warning: Vehicle 'veh34' ends teleporting on edge 'gneE2', time 1815.00.
+Warning: Teleporting vehicle 'veh24'; waited too long (yield), lane='-gneE7_0', time=1887.00.
+Warning: Vehicle 'veh24' ends teleporting on edge 'gneE2', time 1887.00.
+Warning: Teleporting vehicle 'veh22'; waited too long (yield), lane='gneE2_0', time=2120.00.
+Warning: Teleporting vehicle 'veh45'; waited too long (yield), lane='gneE0_0', time=2123.00.
+Warning: Vehicle 'veh45' ends teleporting on edge 'gneE2', time 2130.00.
+Warning: Teleporting vehicle 'veh42'; waited too long (yield), lane='-gneE4_0', time=2143.00.
+Warning: Teleporting vehicle 'veh35'; waited too long (jam), lane='-gneE5_0', time=2153.00.
+Warning: Vehicle 'veh35' ends teleporting on edge 'gneE2', time 2170.00.
+Warning: Teleporting vehicle 'veh7'; waited too long (yield), lane='gneE8_0', time=2178.00.
+Warning: Teleporting vehicle 'veh14'; waited too long (yield), lane='-gneE7_0', time=2194.00.
+Warning: Vehicle 'veh14' ends teleporting on edge 'gneE2', time 2194.00.
+Warning: Vehicle 'veh22' teleports beyond arrival edge '-gneE5', time 2198.00.
+Warning: Vehicle 'veh22' skips stop on lane '-gneE5_0' time=2198.00.
+Warning: Vehicle 'veh42' teleports beyond arrival edge '-gneE5', time 2221.00.
+Warning: Vehicle 'veh42' skips stop on lane '-gneE5_0' time=2221.00.
+Warning: Vehicle 'veh7' teleports beyond arrival edge 'gneE2', time 2280.00.
+Warning: Vehicle 'veh7' skips stop on lane 'gneE2_0' time=2280.00.
+Warning: Teleporting vehicle 'veh47'; waited too long (yield), lane='gneE0_0', time=2475.00.
+Warning: Teleporting vehicle 'veh30'; waited too long (yield), lane='gneE2_0', time=2475.00.
+Warning: Vehicle 'veh47' ends teleporting on edge 'gneE2', time 2475.00.
+Warning: Teleporting vehicle 'veh38'; waited too long (yield), lane='-gneE5_0', time=2507.00.
+Warning: Vehicle 'veh30' teleports beyond arrival edge '-gneE6', time 2514.00.
+Warning: Vehicle 'veh30' skips stop on lane '-gneE6_0' time=2514.00.
+Warning: Teleporting vehicle 'veh24'; waited too long (jam), lane='gneE2_0', time=2520.00.
+Warning: Vehicle 'veh24' ends teleporting on edge '-gneE8', time 2520.00.
+Warning: Vehicle 'veh38' ends teleporting on edge 'gneE2', time 2529.00.
+Warning: Teleporting vehicle 'veh34'; waited too long (jam), lane='-gneE7_0', time=2583.00.
+Warning: Vehicle 'veh34' ends teleporting on edge 'gneE2', time 2583.00.
+Warning: Teleporting vehicle 'veh8'; waited too long (jam), lane='-gneE5_0', time=2873.00.
+Warning: Vehicle 'veh8' ends teleporting on edge 'gneE2', time 2873.00.
+Warning: Teleporting vehicle 'veh43'; waited too long (yield), lane='-gneE7_0', time=2891.00.
+Warning: Teleporting vehicle 'veh38'; waited too long (yield), lane='gneE2_0', time=2928.00.
+Warning: Vehicle 'veh43' ends teleporting on edge 'gneE2', time 2928.00.
+Warning: Teleporting vehicle 'veh37'; waited too long (yield), lane='gneE0_0', time=2938.00.
+Warning: Vehicle 'veh38' ends teleporting on edge '-gneE6', time 2941.00.
+Warning: Teleporting vehicle 'veh34'; waited too long (jam), lane='gneE2_0', time=2970.00.
+Warning: Vehicle 'veh34' ends teleporting on edge 'gneE4', time 2970.00.
+Warning: Vehicle 'veh37' ends teleporting on edge 'gneE2', time 2974.00.
