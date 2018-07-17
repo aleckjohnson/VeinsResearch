@@ -71,12 +71,15 @@ class poi:
     def setHitTotal(currentHits):
         n_numHits = currentHits
 #End of Setters/Getters
-    # There are no ++ or -- operations in python. Instead use += 1 and -= 1
     def increaseValue():
         n_Value += 1
     def decreaseValue():
         n_Value -= 1
 
     def accidentOccur():
+        #how do we get a current hitID and Time from the simulator?
         #Obtain Vehicle ID
+        setAccidentID(hitID)
         #get Current time and set to time of hit
+        setLastHitTime(CurrentTime)
+        n_Value -=1
