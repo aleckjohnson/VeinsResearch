@@ -9,7 +9,7 @@
 ### <a name="3choices"></a>3choices
 [Top](#top_of_page) , [ex1.py](#3choices.ex1_py) , [ex2.py](#3choices.ex2_py) , [ex3](#3choices.ex3) , [ex4](#3choices.ex4) , [template](#3choices.template)
 
-![3choices.gif](./assets/screenshots/projects/3choices.gif)
+![3choices.gif](../../assets/screenshots/projects/3choices.gif)
 <br/>
 Like the namesake of the project, there are three routes that a vehicle may take to get from the left to the right -- these choices are *top*, *middle*, or *bottom*.
 
