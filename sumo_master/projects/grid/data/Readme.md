@@ -3,7 +3,7 @@
 >
 >[Projects Home](../Readme.md)
 
-![grid.gif](../assets/screenshots/projects/grid.gif)
+![grid.gif](../../assets/screenshots/projects/grid.gif)
 
 *Grid* is a square city with a four-lane highway that runs through the center. It is currently only a map file and not in use.
 >Quentin: I created this map to match the prototype that Dr. Akbas and I discussed, a grid that is taller than it is wide where the center highway is wider and lets more traffic through.
