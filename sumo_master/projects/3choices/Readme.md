@@ -9,7 +9,7 @@
 ### <a name="3choices"></a>3choices
 [Top](#top_of_page) , [ex1.py](#3choices.ex1_py) , [ex2.py](#3choices.ex2_py) , [ex3](#3choices.ex3) , [ex4](#3choices.ex4) , [template](#3choices.template)
 
-![3choices.gif](../assets/screenshots/projects/3choices.gif)
+![3choices.gif](./assets/screenshots/projects/3choices.gif)
 <br/>
 Like the namesake of the project, there are three routes that a vehicle may take to get from the left to the right -- these choices are *top*, *middle*, or *bottom*.
 
@@ -17,7 +17,7 @@ Like the namesake of the project, there are three routes that a vehicle may take
 
 <!-- begin ex1.py -->
 #### <a name="3choices.ex1_py"></a>ex1.py
-![3choices.ex1.gif](../assets/screenshots/projects/3choices.ex1.gif)
+![3choices.ex1.gif](../../assets/screenshots/projects/3choices.ex1.gif)
 <br/>
 The first example we created that used TraCI and also dynamically creates a *.rou.xml* file. Here, we use python to write routes that randomly assigns vehicles to either the routes, *top*, *middle*, or *bottom*.
 >Quentin: Note that we are using python to write a *.rou.xml* file *before* we connect TraCI to SUMO and that we are not using TraCI API for route creation.
@@ -206,7 +206,7 @@ python3 ~/src/VeinsResearch/sumo_master/projects/3choices/runner.py
 #### <a name="3choices.ex4"></a>ex4
 [Step #1: Create a 1 edge route.](#3choices.ex4.step1) , [Step #2: Add some vehicles](#3choices.ex4.step2) , [Step #3: Reroute the vehicle.](#3choices.ex4.step3) , [Step #4: Handle vehicles that are nearing their destinations.](#3choices.ex4.step4) , [Notes](#3choices.ex4.notes)
 
-![3choices.ex4.gif](../assets/screenshots/projects/3choices.ex4.gif)
+![3choices.ex4.gif](../../assets/screenshots/projects/3choices.ex4.gif)
 <br/>
 In this example we create some vehicles and assign them routes. When their routes are near completion, we flag them to be rerouted -- finally, we assign the flaged vehicles a new random route.
 We can run *ex4* with the following command:
