@@ -1,85 +1,97 @@
 #TraCI POI Module
 #Created By : Aleck Johnson
-#Last Modified By : Aleck Johnson
-#Date Last Modified: 07/16/2018
-
+#   Also By : Quentin Goss
+#Last Modified By : Quentin Goss
+#Date Last Modified: 07/24/2018
 class poi:
     def __init__(self): #default constructor
-        s_UID = ""
-        f_CoordX = 0.00
-        f_CoordY = 0.00
-        f_CoordZ = 0.00
-        n_Value = 0
-        s_AccidentID = ""
-        t_PrevHitTime = 0
-        t_newTimeOfHit = 0
-        n_numHits = 0 #initialize all required variables
+        self.s_UID = ""
+        self.f_CoordX = 0.00
+        self.f_CoordY = 0.00
+        self.f_CoordZ = 0.00
+        self.n_Value = 0
+        self.s_LastVehID = ""
+        self.n_LastHitTime = -1
+        self.n_numHits = 0 #initialize all required variables
 
     def __del__(self): #default deconstructor
         # We use the deconstructor to free up memory when we don't need
         # the POI node anymore
-        del s_UID
-        del f_CoordX
-        del f_CoordY
-        del f_CoordZ
-        del n_Value
-        del s_AccidentID
-        del t_PrevHitTime
-        del t_newTimeOfHit
-        del n_numHits
+        del self.s_UID
+        del self.f_CoordX
+        del self.f_CoordY
+        del self.f_CoordZ
+        del self.n_Value
+        del self.s_LastVehID
+        del self.n_LastHitTime
+        del self.n_numHits
         
 
         
 #Setters/Getters Begin Below
-    def getUID():
-        return s_UID
-    def setUID(newID):
-        s_UID = newID
+    def getUID(self):
+        return self.s_UID
+    def setUID(self,s_newID):
+        self.s_UID = s_newID
 
-    def getXCoord():
-        return f_CoordX
-    def setXCoord(newX):
-        f_CoordX = newX
+    def getXCoord(self):
+        return self.f_CoordX
+    def setXCoord(self,f_newX):
+        self.f_CoordX = f_newX
 
-    def getYCoord():
-        return f_CoordY
-    def setYCoord(newY):
-        f_CoordY = newY
+    def getYCoord(self):
+        return self.f_CoordY
+    def setYCoord(self,f_newY):
+        self.f_CoordY = f_newY
 
-    def getZCoord():
-        return f_CoordZ
-    def setZCoord(newZ):
-        f_CoordZ = newZ
+    def getZCoord(self):
+        return self.f_CoordZ
+    def setZCoord(self,f_newZ):
+        self.f_CoordZ = f_newZ
 
-    def getValue():
-        return n_Value
-    def setValue(newVal):
-        n_Value = newVal
+    def getValue(self):
+        return self.n_Value
+    def setValue(self,n_newVal):
+        self.n_Value = n_newVal
 
-    def getAccidentID():
-        return s_AccidentID
-    def setAccidentID(newAccidentID):
-        s_AccidentID = newAccidentID
+    def getLastVehID(self):
+        return self.s_LastVehID
+    def setLastVehID(self,n_newVehID):
+        self.s_LastVehID = n_newVehID
 
-    def getLastHitTime():
-        return t_PrevHitTime
-    def setLastHitTime(newHitTime):
-        t_PrevHitTime = newHitTime
+    def getLastHitTime(self):
+        return self.n_LastHitTime
+    def setLastHitTime(self,n_newHitTime):
+        self.n_LastHitTime = n_newHitTime
 
-    def getHitTotal():
-        return n_numHits
-    def setHitTotal(currentHits):
-        n_numHits = currentHits
+    def getHitTotal(self):
+        return self.n_numHits
+    def setHitTotal(self,n_newHitTotal):
+        self.n_numHits = n_newHitTotal
 #End of Setters/Getters
-    def increaseValue():
-        n_Value += 1
-    def decreaseValue():
-        n_Value -= 1
 
-    def accidentOccur():
-        #how do we get a current hitID and Time from the simulator?
+    def increaseValue(self):
+        self.n_Value += 1
+    def increaseValueBy(self,n_Amt):
+        self.n_Value += n_Amt
+    def decreaseValue(self):
+        self.n_Value -= 1
+
+    #############################
+    # A vehicle tags the POI
+    #
+    # @param n_Step = current timestep
+    # @param s_VehID = ID of the vehicle that hits the POI
+    #############################
+    def vehicleHit(self,n_step,s_vehID):
         #Obtain Vehicle ID
-        setAccidentID(hitID)
+        self.s_LastVehID = s_vehID
+        
         #get Current time and set to time of hit
-        setLastHitTime(CurrentTime)
-        n_Value -=1
+        self.n_LastHitTime = n_step
+
+        # The value decreases
+        self.decreaseValue()
+        
+        self.n_numHits += 1
+    # end def vehicleHit(n_Step,s_VehID):

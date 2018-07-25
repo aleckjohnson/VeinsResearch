@@ -153,6 +153,8 @@ def initialize():
   traci.route.add("westbound",["-gneE50"])
   debug("routes sucessfully added.")
   
+
+  
   return
 # end def intialize
 
@@ -164,37 +166,35 @@ def initialize():
 def timestep(n_step):  
   create_vehicles(n_step)
   go_downtown(n_step)
+  handle_lls_veh_data()
   
-  # If the vehicles that went downtown have reached their destination.
-  # they will head towards their original exit.
-  for ls_row in LLS_VEH_DATA:
-    # 0 is the vehicle ID and 2 is the next destination
-    try:
-      if (traci.vehicle.getRoadID(ls_row[0]) == ls_row[2]):
-        # The vehicle has arived, send it on it's way. The exit destination
-        # 1 is the exit edge
-        traci.vehicle.changeTarget(ls_row[0],ls_row[1])
-        
-        # Change the color to blue so we can recognize accomplished cars
-        traci.vehicle.setColor(ls_row[0],(0,0,255,0))
-        
-        # remove the vehicle from the list since we no longer have a
-        LLS_VEH_DATA.remove(ls_row)
-      # end if
-      
-    # This exception is called when a vehicle teleports beyond the ending
-    #  destination and doesn't get properly removed from this list. I need
-    #  to find some way to recognize when something teleports and remove
-    #  it, or find handle it some other way.
-    except:
-      LLS_VEH_DATA.remove(ls_row)
-      #debug("\n" + ls_row[0] + " >> " + ls_row[2])
-      #debug(LLS_VEH_DATA)
-      #pause()
-        
-  # for (ls_row in LLS_EXIT_DEST):
   return
 # end timestep
+
+
+###############################
+# Create POIs
+###############################
+def create_pois():
+  # We're going to add a few points of interest before we start. This
+  # will give our vehicles something to travel too.
+  s_poi_id = ""
+  n_pois = 0
+  for lf_poi in config.llf_poi_coords:
+    s_poi_id = "poi" + str(n_pois)
+    
+    # traci.poi.add( ID, x, y, Color, arbitrary desc., layer) 
+    traci.poi.add(s_poi_id, lf_poi[0], lf_poi[1], (100,100,100,0), poiType="taco_cart",layer=0)
+    
+    # Finds the closest edge to an xy coordinate.
+    # (edgeID, closest_edge_x, closest_edge_y)
+    #s_sff_road = traci.simulation.convertRoad(25.00,30.00,isGeo=False)
+    #debug(s_sff_road)
+    
+    n_pois += 1
+  # end for lf_poi in config.llf_poi_coords:
+  debug("POIs sucessfully added.")
+# end def create_pois()
 
 
 ###############################
@@ -263,6 +263,42 @@ def go_downtown(n_step):
     
   #end if (n_step % n_reroute_rate == 0):
 # end deg go_downtown()
+
+
+###############################
+# Handle LLS_VEH_DATA
+###############################
+def handle_lls_veh_data():
+  # If the vehicles that went downtown have reached their destination.
+  # they will head towards their original exit.
+  global LLS_VEH_DATA
+  for ls_row in LLS_VEH_DATA:
+    # 0 is the vehicle ID and 2 is the next destination
+    try:
+      if (traci.vehicle.getRoadID(ls_row[0]) == ls_row[2]):
+        # The vehicle has arived, send it on it's way. The exit destination
+        # 1 is the exit edge
+        traci.vehicle.changeTarget(ls_row[0],ls_row[1])
+        
+        # Change the color to blue so we can recognize accomplished cars
+        traci.vehicle.setColor(ls_row[0],(0,0,255,0))
+        
+        # remove the vehicle from the list since we no longer have a
+        LLS_VEH_DATA.remove(ls_row)
+      # end if
+      
+    # This exception is called when a vehicle teleports beyond the ending
+    #  destination and doesn't get properly removed from this list. I need
+    #  to find some way to recognize when something teleports and remove
+    #  it, or find handle it some other way.
+    except:
+      LLS_VEH_DATA.remove(ls_row)
+      #debug("\n" + ls_row[0] + " >> " + ls_row[2])
+      #debug(LLS_VEH_DATA)
+      #pause()
+        
+  # for (ls_row in LLS_EXIT_DEST):
+# end def handle_lls_veh_data():
 
 
 ###############################
