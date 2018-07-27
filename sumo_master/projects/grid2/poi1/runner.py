@@ -123,12 +123,14 @@ def main():
 # Add imports here
 import random
 random.seed(config.n_seed)
+import poi
 
 ###############################
 # Global Variables
 ###############################
 N_VEHICLES = 0
 LLS_VEH_DATA = [] #[s_veh_id,s_exit_dest_edge,s_next_dest_edge]
+L_POIS = [] #POI objects
 
 
 ###############################
@@ -152,8 +154,7 @@ def initialize():
   traci.route.add("eastbound",["gneE52"])
   traci.route.add("westbound",["-gneE50"])
   debug("routes sucessfully added.")
-  
-
+  create_pois()
   
   return
 # end def intialize
@@ -166,7 +167,8 @@ def initialize():
 def timestep(n_step):  
   create_vehicles(n_step)
   go_downtown(n_step)
-  handle_lls_veh_data()
+  handle_lls_veh_data(n_step)
+  poi_value_update(n_step)
   
   return
 # end timestep
@@ -180,6 +182,7 @@ def create_pois():
   # will give our vehicles something to travel too.
   s_poi_id = ""
   n_pois = 0
+  global L_POIS
   for lf_poi in config.llf_poi_coords:
     s_poi_id = "poi" + str(n_pois)
     
@@ -188,8 +191,17 @@ def create_pois():
     
     # Finds the closest edge to an xy coordinate.
     # (edgeID, closest_edge_x, closest_edge_y)
-    #s_sff_road = traci.simulation.convertRoad(25.00,30.00,isGeo=False)
-    #debug(s_sff_road)
+    s_sff_road = traci.simulation.convertRoad(lf_poi[0],lf_poi[1],isGeo=False)
+    
+    # Create a POI object
+    o_poi = poi.poi(s_poi_id,lf_poi[0],lf_poi[1], config.f_initial_poi_value, s_sff_road)
+    
+    # Set Decrement Amount
+    # This is will be the amount the Value will decrease every POI Update
+    o_poi.setDecreaseValue(config.f_poi_value_dec_amt) 
+    
+    # Add the object to the list of POIs.
+    L_POIS.append(o_poi)
     
     n_pois += 1
   # end for lf_poi in config.llf_poi_coords:
@@ -246,20 +258,36 @@ def go_downtown(n_step):
     traci.vehicle.setColor(s_veh_id,(255,0,0,0))
     
     # Store the exit destination edge before we change it's route.
-    s_exit_edge = traci.vehicle.getRoute(s_veh_id)[-1]
-    
-    # Send it someplace downtown.
-    s_dest_edge = "-gneE35"
+    # In case the same vehicle gets rerouted, we'll make sure that
+    # it doesn't set it's ecit edge to a non-exit
+    global LLS_VEH_DATA 
+    ls_exit_edges = ["gneE52","-gneE52","gneE50","-gneE50"]
+    s_edge = traci.vehicle.getRoute(s_veh_id)[-1]
+    # It's being rerouted for the 1st time.
+    if (s_edge in ls_exit_edges):
+      s_exit_edge = s_edge
+    # It's being rerouted for the 2nd or more time.
+    else:
+      for ls_row in LLS_VEH_DATA:
+        if (s_veh_id == ls_row[0]):
+          s_exit_edge = ls_row[1]
+          
+    # Send it to a poi node downtown at random
+    global L_POIS
+    n_random_int = random.randint(0,len(L_POIS)-1)
+    s_dest_edge = L_POIS[n_random_int].getClosestEdge()[0]
+    x = L_POIS[n_random_int].getClosestEdge()[1]
+    y = L_POIS[n_random_int].getClosestEdge()[2]
     traci.vehicle.changeTarget(s_veh_id,s_dest_edge)
+    #traci.vehicle.moveToXY(s_veh_id, s_dest_edge, 1, x, y, angle=-1001.0, keepRoute=1)
       
     # Add it to LLS_VEH_DATA to be tracked.
-    global LLS_VEH_DATA
-    is_found = False
+    # If a record already exists remove it so we can update   
     for ls_row in LLS_VEH_DATA:
       if (s_veh_id == ls_row[0]):
-        is_found = True
-    if (not is_found):
-        LLS_VEH_DATA.append([s_veh_id,s_exit_edge,s_dest_edge])
+        LLS_VEH_DATA.remove(ls_row)
+    # Add to history.
+    LLS_VEH_DATA.append([s_veh_id,s_exit_edge,s_dest_edge])
     
   #end if (n_step % n_reroute_rate == 0):
 # end deg go_downtown()
@@ -267,38 +295,76 @@ def go_downtown(n_step):
 
 ###############################
 # Handle LLS_VEH_DATA
+#
+# Loops through all vehicles in LLS_VEH_DATA and check to if they've
+# arrived at their destinations.
 ###############################
-def handle_lls_veh_data():
+def handle_lls_veh_data(n_step):
   # If the vehicles that went downtown have reached their destination.
   # they will head towards their original exit.
   global LLS_VEH_DATA
+  global L_POIS
+  s_veh_id = ""
+  s_exit_edge = ""
+  s_dest_edge = ""
   for ls_row in LLS_VEH_DATA:
     # 0 is the vehicle ID and 2 is the next destination
-    try:
-      if (traci.vehicle.getRoadID(ls_row[0]) == ls_row[2]):
-        # The vehicle has arived, send it on it's way. The exit destination
-        # 1 is the exit edge
-        traci.vehicle.changeTarget(ls_row[0],ls_row[1])
-        
-        # Change the color to blue so we can recognize accomplished cars
-        traci.vehicle.setColor(ls_row[0],(0,0,255,0))
-        
-        # remove the vehicle from the list since we no longer have a
-        LLS_VEH_DATA.remove(ls_row)
-      # end if
+    # Is the vehicle on it's destination edge?
+    s_veh_id = ls_row[0]
+    s_dest_edge = ls_row[2]
+    if (traci.vehicle.getRoadID(s_veh_id) == s_dest_edge):
+      # The vehicle has arived, send it on it's way. The exit destination
+      # 1 is the exit edge
+      s_exit_edge = ls_row[1]
+      traci.vehicle.changeTarget(s_veh_id,s_exit_edge)
       
-    # This exception is called when a vehicle teleports beyond the ending
-    #  destination and doesn't get properly removed from this list. I need
-    #  to find some way to recognize when something teleports and remove
-    #  it, or find handle it some other way.
-    except:
+      # Change the color to blue so we can recognize accomplished cars
+      traci.vehicle.setColor(s_veh_id,(0,0,255,0))
+      
+      # Locate the POI that we arrived at. Find the POI that is 
+      # nearest to the edge we're on.
+      for poi in L_POIS:
+        if (s_dest_edge == poi.getClosestEdge()[0]):    
+          poi.vehicleHit(n_step,s_veh_id)
+          break
+
+      # remove the vehicle from the list since we no longer need to
+      # track it.
       LLS_VEH_DATA.remove(ls_row)
-      #debug("\n" + ls_row[0] + " >> " + ls_row[2])
-      #debug(LLS_VEH_DATA)
-      #pause()
-        
+    # end if
   # for (ls_row in LLS_EXIT_DEST):
 # end def handle_lls_veh_data():
+
+
+###############################
+# Handle POI value update.
+# Loops through the L_POIS list. Anything that happens during a POI
+# value update goes here.
+###############################
+def poi_value_update(n_step):
+  # Handle POI value update.
+  if (n_step % config.n_poi_value_update_rate == 0):
+    global L_POIS
+    for poi in L_POIS:
+      # Value increases over time
+      poi.increaseValueBy(config.f_poi_value_inc_amt)
+      # Make sure that the value can't increase over max
+      if (poi.getValue() > config.f_poi_value_max):
+        poi.setValue(config.f_poi_value_max)
+      
+      # Update color to reflect value
+      # We want low values to be blue and high values to be green
+      # Colors are (red, green, blue, alpha)
+      n_color_intensity = int((poi.getValue() / config.f_poi_value_max) * 255)
+      if (poi.getValue() < 0):
+        traci.poi.setColor(poi.getID(),(255,0,0,0))
+      elif (poi.getValue() > 255):
+        traci.poi.setColor(poi.getID(),(0,255,0,0))
+      else:
+        traci.poi.setColor(poi.getID(),(255-n_color_intensity,0+n_color_intensity,0,0))
+    # end for o_poi in L_POIS:
+  # end if (n_step % config.n_poi_value_update_rate):
+# end def handle_poi_operations
 
 
 ###############################

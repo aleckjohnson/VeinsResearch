@@ -4,14 +4,15 @@ import poi
 print("poi module sucessfully imported.")
 
 # Initialize class
-poi_test = poi.poi()
+#poi_test = poi.poi()
+poi_test = poi.poi("poi1",14.00,30.00,50,("gneE0",50.3,19.75))
 print("poi_test initializes as object poi.")
 
 # UID
 print()
-print("UID="+poi_test.getUID())
-poi_test.setUID("Fuzzy Bunny")
-print("UID="+poi_test.getUID())
+print("UID="+poi_test.getID())
+poi_test.setID("Fuzzy Bunny")
+print("UID="+poi_test.getID())
 
 # XYZ Coordinates
 print()
@@ -39,15 +40,27 @@ print("HitTotal="+str(poi_test.getHitTotal()))
 
 # Value operations
 print()
-print("value="+str(poi_test.getValue()))
+print("n_DecreaseValue="+str(poi_test.getDecreaseValue()))
+poi_test.setDecreaseValue(5)
+print("n_DecreaseValue="+str(poi_test.getDecreaseValue()))
+print("n_IncreaseValue="+str(poi_test.getIncreaseValue()))
+poi_test.setIncreaseValue(7)
+print("n_IncreaseValue="+str(poi_test.getIncreaseValue()))
+print("Value="+str(poi_test.getValue()))
 poi_test.setValue(300)
-print("value="+str(poi_test.getValue()))
+print("Value="+str(poi_test.getValue()))
 poi_test.increaseValue()
-print("value="+str(poi_test.getValue()))
+print("Value="+str(poi_test.getValue()))
 poi_test.increaseValueBy(-50)
-print("value="+str(poi_test.getValue()))
+print("Value="+str(poi_test.getValue()))
 poi_test.decreaseValue()
-print("value="+str(poi_test.getValue()))
+print("Value="+str(poi_test.getValue()))
+
+# Closest Edge
+print()
+print("ClosestEdge="+str(poi_test.getClosestEdge()))
+poi_test.setClosestEdge(("gneE44",25.00,10.00))
+print("ClosestEdge="+str(poi_test.getClosestEdge()))
 
 # Vehicle Hit
 print()
@@ -56,11 +69,11 @@ print("LastVehID="+poi_test.getLastVehID())
 poi_test.setLastHitTime(-1)
 print("LastHitTime="+str(poi_test.getLastHitTime()))
 poi_test.setValue(0)
-print("value="+str(poi_test.getValue()))
+print("Value="+str(poi_test.getValue()))
 poi_test.vehicleHit(400,"Veh456")
 print("LastVehID="+poi_test.getLastVehID())
 print("LastHitTime="+str(poi_test.getLastHitTime()))
-print("value="+str(poi_test.getValue()))
+print("Value="+str(poi_test.getValue()))
 
 # Delete
 print()
