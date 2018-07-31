@@ -36,7 +36,7 @@ llf_poi_coords = [[23.0,-25.0],[24.0,34.0],[95.0,33.0],[104.0,-15.0],[142.0,-45.
 
 Before we start looping through our list off coordinates to create our POIs with, we'll bring in a global variable *L_POIS* which we'll use to keep track of and manipulate POIs within the python script.
 At each step of our POI creation loop, we'll add POIs to the simulation with the *traci.poi.add()* method and find the nearest edge with the *traci.simulation.convertRoad()* method.
-Then we'll create a [poi object](../../../modules/Readme.md) and add it to *L_POIS*.
+Then we'll create a [poi object](../../modules/Readme.md) and add it to *L_POIS*.
 ```
 global L_POIS
 for lf_poi in config.llf_poi_coords:
