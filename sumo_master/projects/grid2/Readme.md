@@ -14,7 +14,7 @@ A more ergonomic adaptation of [grid](../grid/Readme.md) that fits neatly on a 1
 <br/>
 ![grid2.poi1.gif](../../assets/screenshots/projects/grid2.poi1.gif)
 <br/> The project *poi1* is the second example created on the *grid2* project.
-We build off of the previous example [reroute1](#reroute1) and we utilize the *poi* class from the [poi module](../../../modules/Readme.md). We have the following goals:
+We build off of the previous example [reroute1](#reroute1) and we utilize the *poi* class from the [poi module](../../modules/Readme.md). We have the following goals:
 1. Add any number of point of interests (POIs).
 2. Route vehicles to the POIs at random.
 3. Increase POI value over time.
