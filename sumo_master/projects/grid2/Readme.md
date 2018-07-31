@@ -21,6 +21,7 @@ We build off of the previous example [reroute1](#reroute1) and we utilize the *p
 4. Decrease POI value when a vehicle arrives to the closest point near the POI.
 
 ### <a name="poi1.step1"></a>Step #1: Adding point of interests (POIs).
+[poi1](#poi1)<br/>
 The first step is to add the POIs to the map.
 TraCI has has a module for POIs and we'll use this as a baseline for the handling or POIs.
 
@@ -63,6 +64,7 @@ for lf_poi in config.llf_poi_coords:
 ```
 
 ### <a name="poi1.step2"></a>Step #2: Route vehicles to POIs at random.
+[poi1](#poi1)<br/>
 The next step is to route some vehicles to the POIs at random.
 To do this we add a few lines of code in the *go_downtown(n_step)* method that sends the vehicle to the edge closest to a random POI.
 
@@ -75,6 +77,7 @@ traci.vehicle.changeTarget(s_veh_id,s_dest_edge)
 ```
 
 ### <a name="poi1.step3"></a>Step #3: Update POIs every tick.
+[poi1](#poi1)<br/>
 We update the POIs at a configurable tick rate (**config.n_poi_value_update_rate**).
 Within the update loop, we increase each POIs value and update the color to represent the next value.
 All POIs start out as grey on timestep 0 and range between red (lowest value) and green (highest value) for the remainder of the simulation.
@@ -103,6 +106,7 @@ if (n_step % config.n_poi_value_update_rate == 0):
 ```
 
 ### <a name="poi1.step4"></a>Step #4: Decrease POI value on hit.
+[poi1](#poi1)<br/>
 Finally, when a vehicle gets to it's destination POI, we call it a "hit".
 Since POIs may be placed outside of the boundaries of an edge, we accept a vehicle arriving on the edge closest to the POI to be equivalent to arriving at the POI.
 We add a few lines to the *handle_lls_veh_data()* method to locate and properly call a hit to the corresponding POI.
@@ -117,6 +121,7 @@ for poi in L_POIS:
 ```
 
 ### <a name="poi1.bug_fixes"></a>Bug Fixes
+[poi1](#poi1)<br/>
 In this example we fixed a bug in the *go_downtown(n_step)* method that caused vehicles to disappear after reaching their POI destination when they are flagged for rerouting twice or more.
 
 First, we change the way that a vehicles route "memory" is stored into the *LLS_VEH_DATA* data structure.
@@ -165,6 +170,7 @@ s_exit_edge = ls_row[1]
 2. Send some vehicles downtown and then once they arrive, send them back to their original destination.
 
 ### <a name="reroute1.step1"></a>Step #1: Create some traffic.
+[reroute1](#reroute1)<br/>
 The first step is to create a natural flow of traffic moving through our city. To create this flow we use a uniform distribution between 0.0 and 1.0 so that half of the vehicles created are routed eastbound and the other half of vehicles are routed westbound.
 
 ```
@@ -179,6 +185,7 @@ else:
 ```
 
 ### <a name="reroute1.step2"></a>Step #2: Select some vehicles to be sent downtown.
+[reroute1](#reroute1)<br/>
 The next step is to start to the rerouting process by selecting a vehicle currently traveling *eastbound* or *westbound*.
 During this step we also need to save the original destination (which is the edge leading out of the city) so that when the reroute is complete, it can procede onto it's original destination.
 
@@ -191,6 +198,7 @@ n_random_int = random.randint(0,len(ls_veh_ids)-1)
 s_veh_id = ls_veh_ids[n_random_int]
 ```
 ### <a name="reroute1.step3"></a>Step #3: Store destinations into memory.
+[reroute1](#reroute1)<br/>
 Before we send the vehicles downtown we need to save a few things into memory. 
 We store three pieces of data into the global variable **LLS_VEH_DATA**, the vehicle ID, the destination edge ID of the route downtown, and the edge where it will exit the city.
 First we retrieve it's original destination by retrieiving the last edge in the current route set.
@@ -222,6 +230,7 @@ if (not is_found):
 LLS_VEH_DATA.append([s_veh_id,s_exit_edge,s_dest_edge])
 ```
 ### <a name="reroute1.step4"></a>Step #4: Handle vehicles that arrive downtown.
+[reroute1](#reroute1)<br/>
 The last step is to handle vehicles that have arrived at their destination. We do this inside the *timestep(n_step)* method.
 
 ```
