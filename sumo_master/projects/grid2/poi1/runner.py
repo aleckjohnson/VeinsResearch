@@ -276,10 +276,7 @@ def go_downtown(n_step):
     global L_POIS
     n_random_int = random.randint(0,len(L_POIS)-1)
     s_dest_edge = L_POIS[n_random_int].getClosestEdge()[0]
-    x = L_POIS[n_random_int].getClosestEdge()[1]
-    y = L_POIS[n_random_int].getClosestEdge()[2]
     traci.vehicle.changeTarget(s_veh_id,s_dest_edge)
-    #traci.vehicle.moveToXY(s_veh_id, s_dest_edge, 1, x, y, angle=-1001.0, keepRoute=1)
       
     # Add it to LLS_VEH_DATA to be tracked.
     # If a record already exists remove it so we can update   

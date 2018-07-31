@@ -22,13 +22,13 @@ lsn_colors = [(255,0,0,0),(0,255,0,0),(0,0,255,0),(255,255,0,0),(255,0,255,0),(0
 n_seed = 777333
 
 # How many time steps between new vehicles spawning?
-n_vehicle_spawn_rate=1 
+n_vehicle_spawn_rate=5
 
 # The maximum number of vehicles that may exist in the simulation.
 n_vehicles_max=100 
 
 # How often to reroute a vehicle into town.
-n_go_downtown_rate=50
+n_go_downtown_rate=20
 
 #[x,y] coordinates of all POI.
 llf_poi_coords = [[23.0,-25.0],[24.0,34.0],[95.0,33.0],[104.0,-15.0],[142.0,-45.0],[187.0,32.0]] 
@@ -42,7 +42,7 @@ n_poi_value_update_rate=10
 # The amount of value that the poi gains each update.
 f_poi_value_inc_amt=0.10 
 
-# The amount that the poi value will decrease with every update.
+# The amount that the poi value will decrease with every hit.
 f_poi_value_dec_amt=1.50
 
 # The maximum value that a POI may be.

@@ -16,4 +16,4 @@ lsn_colors = [(255,0,0,0),(0,255,0,0),(0,0,255,0),(255,255,0,0),(255,0,255,0),(0
 n_seed = 777333
 n_vehicle_spawn_rate=1 # How many time steps between new vehicles spawning?
 n_vehicles_max=100 # The maximum number of vehicles that may exist in the simulation.
-n_go_downtown_rate=50# How often to reroute a vehicle into town.
+n_go_downtown_rate=30# How often to reroute a vehicle into town.
