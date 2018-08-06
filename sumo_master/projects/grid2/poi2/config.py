@@ -16,19 +16,19 @@ n_time_steps = 10000
 s_vtype = """<vType id="chevy_s10" accel="0.6" decel="1.3" sigma="0.4" length="5" minGap="2.5" maxSpeed="3" guiShape="passenger"/>"""
 
 # Some premade colors
-lsn_colors = [(255,0,0,0),(0,255,0,0),(0,0,255,0),(255,255,0,0),(255,0,255,0),(0,255,255,0)]
+ltn_colors = [(255,0,0,0),(0,255,0,0),(0,0,255,0),(255,255,0,0),(255,0,255,0),(0,255,255,0)]
 
 # Seed for Random
 n_seed = 777333
 
 # How many time steps between new vehicles spawning?
-n_vehicle_spawn_rate=10
+n_vehicle_spawn_rate=5
 
 # The maximum number of vehicles that may exist in the simulation.
 n_vehicles_max=100 
 
 # How often to reroute a vehicle into town.
-n_go_downtown_rate=20
+n_go_downtown_rate=50
 
 #[x,y] coordinates of all POI.
 llf_poi_coords = [[23.0,-25.0],[24.0,34.0],[95.0,33.0],[104.0,-15.0],[142.0,-45.0],[187.0,32.0]] 
@@ -47,3 +47,7 @@ f_poi_value_dec_amt=1.50
 
 # The maximum value that a POI may be.
 f_poi_value_max=2.00
+
+# Potential capacity of tracked vehicles
+n_min_capacity=10
+n_max_capacity=510
