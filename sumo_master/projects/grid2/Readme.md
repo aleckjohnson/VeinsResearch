@@ -316,7 +316,7 @@ If no "go home" conditions are met, we reroute the vehicle.
 ---
 <!-- begin poi3 -->
 ## <a name="poi3"></a>poi3
-[Top](#top_of_page) , [Decision #1](#poi3.decision1) , [Decision #2](#poi3.decision2) , [Decision #3](#poi3.decision3) , [Minor Tweaks](#minor_tweaks)
+[Top](#top_of_page) , [Decision #1](#poi3.decision1) , [Decision #2](#poi3.decision2) , [Decision #3](#poi3.decision3) , [Minor Tweaks](#poi3.minor_tweaks)
 <br/>![gri2.poi3.gif](../../assets/screenshots/projects/grid2.poi3.gif)
 <br/>The project *poi3* is the fourth example created on the *grid2* project.
 We build off the previous example [poi2](#poi2) and modify the POI selection during the *go_to_poi(veh)* to be more intelligent and we also make some minor tweaks.
