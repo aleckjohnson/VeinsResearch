@@ -1,4 +1,5 @@
 # <a name="top_of_page"></a>grid2
+[poi1](#poi1) , [poi2](#poi2) , [poi3](#poi3) , [reroute1](#reroute1)
 >Quentin: Here we have notes about the project grid2
 >
 >[Projects Home](../Readme.md)
@@ -159,6 +160,263 @@ s_exit_edge = ls_row[1]
 ```
 
 <!-- end poi1 -->
+---
+<!-- begin poi2 -->
+## <a name="poi2"></a>poi2
+[Top](#top_of_page) , [Step #1](#poi2.step1) , [Step #2](#poi2.step2) , [Step #3](#poi2.step3)
+<br/>
+![grid2.poi2.gif](../../assets/screenshots/projects/grid2.poi2.gif)
+<br/>
+The project *poi2* is the third example created on the *grid2* project. 
+We build off of the previous example [poi1](#poi1) and we implment the *vehicle* class from the [vehicle module](../../modules/Readme.md).
+We have the following goals:
+1. Replace the vehicle management structure from [poi1](#poi1) **LLS_VEH_DATA** with a list of vehicle objects known as **L_VEHICLES**.
+2. Add a capacity to the vehicles. The capacity should vary with each vehicle.
+3. Reduce vehicle capacity when a vehicle "hits" a poi.
+4. Implement some rules for the vehicle:
+	* Vehicle cannot visit the same POI twice.
+	* Vehicle "goes home" when capacity is zero (0).
+	* Vehicle "goes home" if it's visited every POI.
+	
+### <a name="poi2.step1"></a>Step #1: Choose a vehicle to reroute.
+[poi2](#poi2) <br/>
+Since we are utilizing vehicle objects now instead of a list with three (3) strings to track our vehicles, we have made the rerouting functions more modular by splitting the old *go_downtown()* method from [poi1](#poi1) into three seperate methods:
+```
+# Chooses which vehicle will be picked to go downtown. 
+# It chooses from any of the (yellow) vehicles traveling
+# along the four (4) lane highway.
+def choose_vehicle_to_reroute(n_step):
+
+# Interface with the list of currently tracked vehicles to
+# grab an existing vehicle object or create a new vehicle
+# if it doesn't already exist.
+def retrieve_vehicle(s_veh_id):
+return veh
+
+# Decides which POI to send the vehicle to and also sends
+# it on it's way.
+def go_to_poi(veh):
+```
+When choosing the vehicle, we utilize the first of the method *choose_vehicle_to_reroute(n_step)*.
+We only pick a vehicle here, the rerouting checks happen in *go_to_poi(veh)*.
+```
+###############################
+# Picks a vehicle at random to reroute.
+###############################
+def choose_vehicle_to_reroute(n_step):
+  # Every x timesteps we're going to reroute a vehicle at random to
+  # some point in town.
+  if (n_step % config.n_go_downtown_rate == 0 and n_step != 0):
+    # Pick a vehicle at random to reroute.
+    ls_veh_ids = traci.vehicle.getIDList()
+    n_random_int = random.randint(0,len(ls_veh_ids)-1)
+    s_veh_id = ls_veh_ids[n_random_int]
+    
+    # Change color to orange.
+    traci.vehicle.setColor(s_veh_id,(255,0,0,0))
+    
+    # Create a new vehicle object
+    veh = retrieve_vehicle(s_veh_id)
+    
+    # Route the vehicle to the first poi
+    go_to_poi(veh)
+# end def choose_vehicle_to_reroute:
+```
+
+### <a name="poi2.step2"></a>Step #2: Send the vehicle to a POI.
+[poi2](#poi2) <br/>
+Once a vehicle is chosen we can send it to a POI -- we do this using hte *go_to_poi(veh)* method.
+Here we perform a quick check is a do-while loop, in each pass we pick a random POI to visit and then check if the if the vehicle has been to the POI otherwise we continue until a point is randomly chosen that hasn't been visited yet.
+> Quentin: Each vehicle object tracks the POIs they've visited in a list.
+> We can retrieve this list by calling *veh.get_visited_pois()*.
+
+This method is ambiguous and works with both newly created vehicles that are being rerouted for the first time and also vehicles currently being rerouted to POIs.
+```
+###############################
+# Go to POI
+# Sends a vehicle to a POI
+###############################
+def go_to_poi(veh):       
+  # Send it to a poi node downtown at random
+  # Python has no Do While. To emulate we do:
+  # while True:
+  #   if fail_condition:
+  #     break
+  global L_POIS
+  while True:
+    n_random_int = random.randint(0,len(L_POIS)-1)
+    s_dest_edge = L_POIS[n_random_int].getClosestEdge()[0]
+    traci.vehicle.changeTarget(veh.get_id(),s_dest_edge)
+    if s_dest_edge not in veh.get_visited_pois():
+      break
+    
+  # Store the current destination edge
+  veh.set_next_dest_edge_id(s_dest_edge)
+  
+  # Add it to L_VEHICLES to be tracked.
+  global L_VEHICLES
+  L_VEHICLES.append(veh)
+# end deg go_to_poi()
+```
+
+### <a name="poi2.step3"></a>Step #3: Handling vehicles that have just arrived a POI.
+[poi2](#poi2) <br/>
+Just like we looped through **LLS_VEH_DATA** in the *handle_lls_veh_data()* method in [poi1](#poi1), we will loop through our list of vehicles **L_VEHICLES** in a method adapted from the old *handle_lls_veh_data()* method named *handle_vehicles()*.
+First, we handle a "hit".
+We reduce the value of the POI that was "hit" and we reduce the capacity of the vehicle.
+```
+# If the vehicle has arrived at it's destination
+if traci.vehicle.getRoadID(veh.get_id()) == veh.get_next_dest_edge_id():     
+
+	# Locate the POI that we arrived at. Find the POI that is 
+	# nearest to the edge we're on.
+	for poi in L_POIS:
+		if (veh.get_next_dest_edge_id() == poi.getClosestEdge()[0]):    
+		  # "Hit" the POI
+		  poi.vehicleHit(n_step,veh.get_id())
+		  
+		  # Add the POI to list of visited POIs.
+		  veh.add_visited_pois(poi.getID())
+		  
+		  # Reduce Capacity
+		  n_amt = int(poi.getValue() * 100.0)
+		  veh.increase_capacity(0-n_amt)
+		  
+		  # Update vehicle Color
+		  update_vehicle_color(veh)
+		  break
+	# End for
+```
+Next, we check if any "go home" conditions are met.
+If a "go home" condition is met, we'll send the vehicle to whichever exit edge they were traveling to before being sent to a POI.
+> Quentin: Here we use a naive approach to check if a vehicle has visited every POI by comparing the length of it's visited poi history to the total amount of POIs in the map.
+> This will become very inefficient with a large number of POIs.
+```
+	# Is the vehicle full (capacity = 0) or has it visted all the POIs?
+	if (veh.get_capacity() == 0) or len(veh.get_visited_pois()) == len(L_POIS) :
+		# Go home
+		traci.vehicle.changeTarget( veh.get_id(), veh.get_final_dest_edge_id())
+
+		# Change the color to blue so we can recognize accomplished cars
+		traci.vehicle.setColor(veh.get_id(),(0,255,255,0))
+
+		# remove the vehicle from the list since we no longer need to
+		# track it.
+		L_VEHICLES.remove(veh)
+```
+If no "go home" conditions are met, we reroute the vehicle.
+```
+	# Otherwise send it to another poi
+	else:
+		# Reroute vehicles to another POI
+		go_to_poi(veh)	
+```
+
+<!-- end poi2 -->
+---
+<!-- begin poi3 -->
+## <a name="poi3"></a>poi3
+[Top](#top_of_page) , [Decision #1](#poi3.decision1) , [Decision #2](#poi3.decision2) , [Decision #3](#poi3.decision3) , [Minor Tweaks](#minor_tweaks)
+<br/>![gri2.poi3.gif](../../assets/screenshots/projects/grid2.poi3.gif)
+<br/>The project *poi3* is the fourth example created on the *grid2* project.
+We build off the previous example [poi2](#poi2) and modify the POI selection during the *go_to_poi(veh)* to be more intelligent and we also make some minor tweaks.
+We will decide on where to send our vehicles by the following checks in order:
+1. To the POI with the most Value at the time of check.
+2. To the closest POI in terms of road distance at the time of check.
+3. Randomly choose to resolve any remaining conflicts.
+
+### <a name="poi3.decision1"></a>Decision #1: Which POI has the most value?
+First, we want to go to the POI with the highest value at the time of checking.
+We'll add a copy of the POI object to a list of candidates called **l_poi_max** that we'll use to narrow down with the next decision.
+To do this, we compare the **f_value** of our **poi** objects.
+```
+l_poi_max = []
+# Find the POI with the most value
+elif poi.getValue() >= n_max_val:
+	l_poi_max.append(poi)
+	
+	# Compare vs the record list if there's more than one item in it.
+	if len(l_poi_max) > 1:
+	
+		# If the recorded pois are less than the current, remove it 
+		# from the tracking list.
+		for poi_max in l_poi_max:
+			if poi_max.getValue() < poi.getValue():
+				l_poi_max.remove(poi_max)
+# End elif
+```
+### <a name="poi3.decision2"></a>Decision #2: Which POI is the closest?
+If we still have a conflict, which is very likely since our POI values can reach a cap, we will pick the closest POI in terms of driving distance.
+We know that we have a conflict when **l_poi_max** has more than one POI in it.
+We can check the driving distance to POIs by setting a route to it then using the TraCI method *traci.vehicle.getDrivingDistance()*.
+We store potential candidates in the list **l_poi_closest**.
+```
+# If there are more than one candidates, meaning that at least two
+# POIs have the same value, we'll compare distances.
+if len(l_poi_max) > 1:
+	f_distance = -1.0
+	f_closest_dist = -1.0
+	l_poi_closest = []
+
+	for poi_max in l_poi_max:
+		# We can determine the distance by assigning a route to each poi
+		# and then calling getDrivingDistance to find the distance retured
+		# as a double
+		s_dest_edge = poi_max.getClosestEdge()[0]
+		traci.vehicle.changeTarget(veh.get_id(),s_dest_edge)
+		f_distance = traci.vehicle.getDrivingDistance(veh.get_id(),s_dest_edge,1.0)
+
+		# Compare distances
+		# We automatically consider the first one
+		if f_closest_dist == -1.0:
+			f_closest_dist = f_distance
+			l_poi_closest.append([poi_max,f_distance])
+
+		# We check the other ones in the list
+		else:
+			# Add possible contendors to list.
+			if f_distance <= f_closest_dist:
+				f_closest_dist = f_distance
+				l_poi_closest.append([poi_max,f_distance])
+
+			# Remove non-contendors from the list
+			for poi_closest in l_poi_closest:
+				if poi_closest[1] > f_distance:
+					l_poi_closest.remove(poi_closest)
+
+			# end for poi_closest in l_poi_closest:
+		# end else
+	# end for poi_max in l_poi_max:
+```
+### <a name="poi3.decision3"></a>Decision #3: Randomly choose a POI.
+If we still have a conflict, in which the chances are almost zero (0), we will choose between the remaining candidates at random.
+We know that there is a conflict when there is greater than one POI in **l_poi_closest**.
+```
+	# If the two values are the same, one of POIs will be picked at random.
+	if len(l_poi_closest) > 1:
+		n_random_int = random.randint(0,len(l_poi_closest))
+		s_dest_edge = l_poi_closest[n_random_int][0]
+```
+### <a name="poi3.minor_tweaks"></a>Minor Tweaks
+Since there are two "go home" conditions, we vary the colors of an "exiting" vehicle.
+```
+# Change color so we can see when cars go home. The colors will
+# vary by reason for going home.
+
+# REASON: No more capacity. Cars will turn CYAN.
+if is_full:
+	traci.vehicle.setColor(veh.get_id(),(0,255,255,0))
+
+# REASON: Visited every unique POI. Cars will turn GREEN  
+elif is_bored:
+	traci.vehicle.setColor(veh.get_id(),(0,255,0,0))
+	
+# REASON: Unknown. Cars will turn DARK GREY
+# If cars are grey, there's a logic problem!
+else:
+	traci.vehicle.setColor(veh.get_id(),(30,30,30,0))
+```
+<!-- end poi3 -->
 ---
 <!-- begin reroute1 -->
 ## <a name="reroute1"></a>reroute1
