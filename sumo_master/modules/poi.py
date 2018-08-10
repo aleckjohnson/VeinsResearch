@@ -5,20 +5,7 @@
 #Last Modified By : Quentin Goss
 #Date Last Modified: 07/26/2018
 #Status: Functional and Tested
-class poi:
-    def __init__(self): #default constructor
-        self.s_ID = ""
-        self.f_CoordX = 0.00
-        self.f_CoordY = 0.00
-        self.f_CoordZ = 0.00
-        self.f_Value = 0.0
-        self.f_DecreaseValue = 1.0 # The amount f_Value is reduced when calling decrease
-        self.f_IncreaseValue = 1.0 # The amount f_Value is increased when calling increase
-        self.s_LastVehID = ""
-        self.n_LastHitTime = -1
-        self.n_NumHits = 0
-        self.s_sff_ClosestEdge = ("",0.0,0.0)
-        
+class poi:        
     def __init__(self, ps_ID, pf_CoordX, pf_CoordY, pf_Value, ps_sff_ClosestEdge):
         self.s_ID = ps_ID
         self.f_CoordX = pf_CoordX
