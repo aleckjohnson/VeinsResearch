@@ -1,4 +1,4 @@
-# <a name="top_of_page"></a>grid2
+# <a name="top_of_page"></a>osm_test
 [File Extensions](#file_extensions) , [Maps](#maps) , [Tools](#tools)
 >Quentin: Here we have notes about the project *osm_test*.
 >
