@@ -4,7 +4,7 @@
 >
 >[Projects Home](../Readme.md)
 
-![univeristy_approaching_highways.gif](../../assets/screenshots/osm/univeristy_approaching_highways.gif)
+![university_approaching_highways.gif](../../assets/screenshots/osm/university_approaching_highways.gif)
 
 This project is a compilation of various things related to converting an 
 [open street maps export](https://www.openstreetmap.org/#map=14/28.1487/-81.8507)
@@ -48,11 +48,11 @@ This section will describe the two maps within the project, one [without geometr
 
 ### <a name="maps.geo"></a>Geometry
 [Maps](#maps)<br/>
-![osm_test.univeristy_geo.gif](../../assets/screenshots/screenshots/osm_test.university_geo.gif)
+![osm_test.university_geo.gif](../../assets/screenshots/projects/osm_test.university_geo.gif)
 
 ### <a name="maps.nogeo"></a>No Geometry
 [Maps](#maps)<br/>
-![osm_test.univeristy.gif](../../assets/screenshots/screenshots/osm_test.university.gif)
+![osm_test.university.gif](../../assets/screenshots/projects/osm_test.university.gif)
 
 <!-- end maps -->
 ---
