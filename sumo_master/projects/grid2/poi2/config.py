@@ -28,7 +28,7 @@ n_vehicle_spawn_rate=5
 n_vehicles_max=100 
 
 # How often to reroute a vehicle into town.
-n_go_downtown_rate=50
+n_go_downtown_rate=100
 
 #[x,y] coordinates of all POI.
 llf_poi_coords = [[23.0,-25.0],[24.0,34.0],[95.0,33.0],[104.0,-15.0],[142.0,-45.0],[187.0,32.0]] 
