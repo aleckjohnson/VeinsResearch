@@ -128,6 +128,7 @@ random.seed(config.n_seed)
 # Global Variables
 ###############################
 N_VEHICLES = 0
+N_PEDS = 0
 
 ###############################
 # Add element(s) to routefiles
@@ -136,7 +137,7 @@ N_VEHICLES = 0
 ###############################
 def generate_elements(): 
   s_elements = "\t" + config.s_vtype_passenger + "\n"
-  s_elements += "\t" + config.s_vtype_pedestrian + "\n"
+  s_elements += "\t" + config.s_vtype_pedestrian
   return s_elements
 # End def generate_elements()
 
@@ -148,6 +149,19 @@ def initialize():
   traci.route.add("cw_route",config.cw_route)
   traci.route.add("ccw_route",config.ccw_route)
   debug("Routes sucessfully added.")
+  
+  # Create all the possible routes for pedestrians.
+  n = 0
+  for s_ped_edge in config.ls_ped_edges:
+    ls_temp = []
+    ls_temp.append(s_ped_edge)
+    s_ped_edge_id = "pedge" + str(n) # pedgeX
+    traci.route.add(s_ped_edge_id,ls_temp)
+    n += 1
+    
+    #print()
+    #debug(ls_temp)
+    #pause()
   
   return
 # end def intialize
@@ -178,7 +192,6 @@ def timestep(n_step):
 ###############################
 # Creates a vehicle
 ###############################
-
 def create_vehicles(n_step):
   
   # Check if the maximum amount of vehicles are in the simulation
@@ -199,9 +212,43 @@ def create_vehicles(n_step):
       traci.vehicle.add(s_veh_id, "cw_route", depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="chevy_s10")
     N_VEHICLES += 1
     
-    del n_step
     del s_veh_id
+    del f_rand_num
   # end if (n_step % N_VEHICLE_SPAWN_RATE == 0):
+  """
+  # Pedestrian creation
+  if (n_step % config.n_ped_spawn_rate == 0):
+    global N_PEDS
+    s_ped_id = "ped" + str(N_PEDS) # pedX
+    
+    # Randomize the starting edge for pedestrians
+    n_rand_int = random.randint(0,len(config.ls_ped_edges)-1)
+    s_start_edge_id = "pedge" + str(n_rand_int)
+    traci.vehicle.add(s_ped_id, s_start_edge_id, depart=n_step+1, pos=-4, speed=-3, lane=-6, typeID="bob")
+    
+    # Make the pedestrian's red
+    traci.vehicle.setColor(s_ped_id,(255,0,0,0))
+    
+    
+    # Sidewalk nodes are not complete enough to connect together
+    # A complete revision of the pathways in this are required to
+    # successfully move pedestrians along.
+    try:
+      n_old = n_rand_int
+      while True:
+        n_rand_int = random.randint(0,len(config.ls_ped_edges)-1)
+        s_dest_edge = config.ls_ped_edges[n_rand_int]
+        if n_old != n_rand_int:
+          break
+      traci.vehicle.changeTarget(s_ped_id,s_dest_edge)
+    except:
+      flag = True
+      pause()
+    
+    N_PEDS += 1
+    """
+  # end if (n_step % config.n_ped_spawn_rate == 0):
+  del n_step
 # end def create_vehicle
 
 ###############################

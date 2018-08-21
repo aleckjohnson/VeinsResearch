@@ -2,13 +2,14 @@
 # Edit these
 project="flpoly"
 begin=0
-end=10000
+end=30000
 
 # Do not edit these
 net_xml=$project".net.xml"
 osm=$project".osm"
 typ_xml="osm.typ.xml"
 poly_xml=$project".poly.xml"
+rou_xml=$project".rou.xml"
 sumocfg=$project".sumocfg"
 geo_sumocfg=$project"_geo.sumocfg"
 
@@ -30,6 +31,7 @@ echo "polyconvert Complete."
 echo "<configuration>" > $geo_sumocfg
 echo -e "\t<input>" >> $geo_sumocfg
 echo -e "\t\t<net-file value=\""$net_xml"\" />" >> $geo_sumocfg
+echo -e "\t\t<route-files value=\""$rou_xml"\" />" >> $geo_sumocfg
 echo -e "\t\t<additional-files value=\""$poly_xml"\" />" >> $geo_sumocfg
 echo -e "\t</input>" >> $geo_sumocfg
 echo -e "\t<time>" >> $geo_sumocfg
@@ -43,6 +45,7 @@ echo "Geometry config file created."
 echo "<configuration>" > $sumocfg
 echo -e "\t<input>" >> $sumocfg
 echo -e "\t\t<net-file value=\""$net_xml"\" />" >> $sumocfg
+echo -e "\t\t<route-files value=\""$rou_xml"\" />" >> $sumocfg
 echo -e "\t</input>" >> $sumocfg
 echo -e "\t<time>" >> $sumocfg
 echo -e "\t\t<begin value=\""$begin"\" />" >> $sumocfg
