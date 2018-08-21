@@ -27,6 +27,9 @@ echo "netconvert Complete."
 polyconvert --net-file $net_xml --osm-files $osm --type-file $typ_xml -o $poly_xml
 echo "polyconvert Complete."
 
+# Route File
+echo -e "<routes>\n</routes>" > $rou_xml
+
 # Sumocfg File w/ Geometry
 echo "<configuration>" > $geo_sumocfg
 echo -e "\t<input>" >> $geo_sumocfg
