@@ -66,6 +66,7 @@ Notably, we also developed a way to capture a partial route without having to ma
 >Our trial code is still in the example but commented out.
 
 ### <a name="traffic1.rbl"></a>Route Building Logic
+[traffic1](#traffic1)
 ```
 # Route building Logic
 if n_step < 0 : #<-- adjust this to about the timestep when the first veh
