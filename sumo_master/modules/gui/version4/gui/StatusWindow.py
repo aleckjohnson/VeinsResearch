@@ -285,12 +285,10 @@ class StatusWindow:
     self.n_window_width = self.n_graph_padding * 2 + self.n_cell_width * self.ln_grid_dimensions[0] * self.n_edge_length_scale
     self.n_window_height = self.n_graph_padding * 2 + self.n_cell_width * self.ln_grid_dimensions[1] * self.n_edge_length_scale
     
-    # If the graph exceed the maximum dimensions, reduce window
-    # size to fit custom dimensions
-    if self.n_window_width > self.n_window_max_width:
-      self.n_window_width = self.n_window_max_width
-    if self.n_window_height > self.n_window_max_height:
+    # Use custom resolution if requested.
+    if not self.n_window_max_height or not self.n_window_max_width == 999999:
       self.n_window_height = self.n_window_max_height
+      self.n_window_width = self.n_window_max_width
     
     self.window = GraphWin(self.s_window_title, self.n_window_width, self.n_window_height)
   # end def create_window(self)
